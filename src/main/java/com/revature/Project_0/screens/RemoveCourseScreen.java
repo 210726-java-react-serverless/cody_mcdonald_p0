@@ -1,13 +1,17 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.services.CourseService;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
 
 public class RemoveCourseScreen extends Screen {
 
-    public RemoveCourseScreen(BufferedReader consoleReader, ScreenRouter router) {
+    private final CourseService courseService;
+
+    public RemoveCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {
         super("RemoveCourseScreen", "/remove-course", consoleReader, router);
+        this.courseService = courseService;
     }
 
     @Override

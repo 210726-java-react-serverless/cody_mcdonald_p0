@@ -12,8 +12,15 @@ public class StudentDashboardScreen extends Screen{
 
     @Override
     public void render() {
+        System.out.println("Welcome, user."); //TODO "Welcome, "+studentName
+        System.out.println("Please select an option."+
+                "\n1) View available courses." +
+                "\n2) Register for a course." +
+                "\n3) View registered courses" +
+                "\n4) Cancel course registration." +
+                "\n5) Log out.");
 
-        //TODO Print available user options
+        //TODO Take user input, validate it, and perform operations as expected with a switch
 
     }
 }

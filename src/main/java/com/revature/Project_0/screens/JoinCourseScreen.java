@@ -1,12 +1,13 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.services.CourseService;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
 
 public class JoinCourseScreen extends Screen {
 
-    public JoinCourseScreen(BufferedReader consoleReader, ScreenRouter router) {
+    public JoinCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {
         super("JoinCourseScreen", "/join-course", consoleReader, router);
     }
 

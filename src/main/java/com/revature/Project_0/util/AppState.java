@@ -1,6 +1,8 @@
 package com.revature.Project_0.util;
 
+import com.revature.Project_0.repositories.CourseRepository;
 import com.revature.Project_0.repositories.UserRepository;
+import com.revature.Project_0.services.CourseService;
 import com.revature.Project_0.services.UserService;
 import com.revature.Project_0.screens.*;
 
@@ -20,15 +22,26 @@ public class AppState {
         // Create app components
         UserRepository userRepo = new UserRepository();
         UserService userService = new UserService(userRepo);
+        CourseRepository courseRepo = new CourseRepository();
+        CourseService courseService = new CourseService(courseRepo);
 
         //Instantiate Screens
         router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new AddCourseScreen(consoleReader, router))
-                .addScreen(new CourseRegistrationScreen(consoleReader, router, userService))
-                .addScreen(new EditCourseScreen(consoleReader, router));
+                .addScreen(new CourseRegistrationScreen(consoleReader, router, courseService))
+                .addScreen(new EditCourseScreen(consoleReader, router))
+                .addScreen(new FacultyDashboardScreen(consoleReader, router))
+                .addScreen(new FacultyLoginScreen(consoleReader, router))
+                .addScreen(new JoinCourseScreen(consoleReader, router, courseService))
+                .addScreen(new RegisteredCoursesScreen(consoleReader, router, courseService))
+                .addScreen(new RemoveCourseScreen(consoleReader, router, courseService))
+                .addScreen(new StudentDashboardScreen(consoleReader, router))
+                .addScreen(new StudentLoginScreen(consoleReader, router))
+                .addScreen(new ViewCoursesScreen(consoleReader, router, courseService))
+                .addScreen(new StudentRegisterScreen(consoleReader, router));
         ;
-        //TODO Kinda ugly and unnecessary
-        // maybe implement screens as eager singletons or a screen factory using lazy singletons?
+        //TODO Kinda ugly and unnecessary to load all screens at once
+        //  implement a screen singleton factory that loads screens as needed later
 
 
     }
