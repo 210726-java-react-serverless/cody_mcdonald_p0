@@ -1,9 +1,13 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.util.ScreenRouter;
+
+import java.io.BufferedReader;
+
 public class ViewCoursesScreen extends Screen {
 
-    public ViewCoursesScreen() {
-        super("ViewCoursesScreen", "/courses");
+    public ViewCoursesScreen(BufferedReader consoleReader, ScreenRouter router) {
+        super("ViewCoursesScreen", "/courses", consoleReader, router);
     }
 
     @Override

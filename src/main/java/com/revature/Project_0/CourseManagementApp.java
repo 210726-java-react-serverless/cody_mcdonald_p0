@@ -1,13 +1,14 @@
 package com.revature.Project_0;
 
 import com.revature.Project_0.screens.WelcomeScreen;
+import com.revature.Project_0.util.AppState;
 
 public class CourseManagementApp {
 
     public static void main(String[] args) {
 
-        WelcomeScreen welcomeScreen = new WelcomeScreen();
-        welcomeScreen.render();
+        AppState app = new AppState();
+        app.startup();
 
     }
 

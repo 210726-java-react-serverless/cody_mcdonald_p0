@@ -1,6 +1,7 @@
 package com.revature.Project_0.exceptions;
 
-public class InvalidEntryException {
+public class InvalidEntryException extends RuntimeException {
 
-    //TODO Throw an exception if a user's entry does not fulfill requirements
+    public InvalidEntryException(String message){super(message);}
+
 }

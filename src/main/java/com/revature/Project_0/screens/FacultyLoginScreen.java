@@ -1,9 +1,13 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.util.ScreenRouter;
+
+import java.io.BufferedReader;
+
 public class FacultyLoginScreen extends Screen {
 
-    public FacultyLoginScreen() {
-        super("FacultyLoginScreen", "/faculty-login");
+    public FacultyLoginScreen(BufferedReader consoleReader, ScreenRouter router) {
+        super("FacultyLoginScreen", "/faculty-login", consoleReader, router);
     }
 
     @Override

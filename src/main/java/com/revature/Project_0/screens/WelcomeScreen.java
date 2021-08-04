@@ -1,10 +1,14 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.util.ScreenRouter;
+
+import java.io.BufferedReader;
+
 public class WelcomeScreen extends Screen {
 
 
-    public WelcomeScreen() {
-        super("WelcomeScreen", "/welcome");
+    public WelcomeScreen(BufferedReader consoleReader, ScreenRouter router) {
+        super("WelcomeScreen", "/welcome", consoleReader, router);
     }
 
     @Override

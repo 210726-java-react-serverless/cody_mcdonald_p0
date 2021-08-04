@@ -1,9 +1,17 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.services.UserService;
+import com.revature.Project_0.util.ScreenRouter;
+
+import java.io.BufferedReader;
+
 public class CourseRegistrationScreen extends Screen {
 
-    public CourseRegistrationScreen() {
-        super("CourseRegistrationScreen", "/join-course");
+    private final UserService userService;
+
+    public CourseRegistrationScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService) {
+        super("CourseRegistrationScreen", "/join-course", consoleReader, router);
+        this.userService = userService;
     }
 
     @Override
