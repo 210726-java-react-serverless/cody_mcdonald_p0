@@ -10,6 +10,7 @@ public class ViewCoursesScreen extends Screen {
     public void render() {
 
         System.out.println("The current courses are:");
+
         //TODO print out courses from database
         //  Take input from user that will print further details about a course or return the user to their Dashboard.
 
