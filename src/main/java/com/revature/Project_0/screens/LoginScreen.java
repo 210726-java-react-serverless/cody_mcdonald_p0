@@ -22,6 +22,7 @@ public class LoginScreen extends Screen {
         System.out.println("Please enter your password:");
         pw = consoleReader.readLine();
         System.out.println("Validating....");
+
         //TODO replace this with actual validation
         if(un.equals("admin")){
             System.out.println("Woops, didn't implement this yet. Come on in!");

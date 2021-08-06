@@ -14,6 +14,7 @@ public class AddCourseScreen extends Screen{
     @Override
     public void render() throws IOException {
 
+
         System.out.println("Add course screen.");
 
         // TODO Iterate through a list of fields to be filled by the user

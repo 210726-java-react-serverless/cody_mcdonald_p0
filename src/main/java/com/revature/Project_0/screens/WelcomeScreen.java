@@ -31,8 +31,8 @@ public class WelcomeScreen extends Screen {
 
 
         String userSelection  = consoleReader.readLine();
-        switch (userSelection) {
-
+        switch (userSelection)
+        {
             case "1":
                 router.navigate("/login");
                 break;
@@ -44,8 +44,7 @@ public class WelcomeScreen extends Screen {
                 closeApp();
                 break;
             default:
-                System.out.println("You provided an invalid value, please try again.");
-
+                System.out.println("Invalid entry. Please try again.");
         }
 
         //  would use a switch here but switches require constants

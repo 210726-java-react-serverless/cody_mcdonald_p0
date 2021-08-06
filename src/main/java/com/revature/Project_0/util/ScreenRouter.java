@@ -14,6 +14,8 @@ public class ScreenRouter {
     //ArrayDeque to be used as a stack for "back" or "cancel" functionality.
     private ArrayDeque<Screen> previousScreens;
 
+    public ScreenRouter(){ previousScreens = new ArrayDeque<Screen>();} //instantiate history in default cons
+
     //Method to add a screen to the hashset.
     public ScreenRouter addScreen(Screen screen) {
         screens.add(screen);
@@ -24,13 +26,19 @@ public class ScreenRouter {
     // to create a stream of Screen objects, filtering it to screens with the defined route, and finally
     // returning the first instance of a stream with that route.
     public void navigate(String route) {
+        if(currentScreen != null) {
+            previousScreens.push(currentScreen); //pushes the current screen onto the top of the stack
+        }
         currentScreen = screens.stream()
                 .filter(screen -> screen.getRoute().equals(route))
                 .findFirst()
                 .orElseThrow(ScreenNotFoundException::new);
     }
 
-    public void goBack() throws ScreenNotFoundException{}
+    public void goBack() throws ScreenNotFoundException{
+        if(previousScreens.size() == 0){ throw new ScreenNotFoundException();}
+        currentScreen = previousScreens.pop();
+    }
 
 
     // Cleanses the history to free up memory after a user logs and to prevent potential security risks.
