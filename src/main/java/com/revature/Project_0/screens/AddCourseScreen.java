@@ -3,6 +3,7 @@ package com.revature.Project_0.screens;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public class AddCourseScreen extends Screen{
 
@@ -11,7 +12,9 @@ public class AddCourseScreen extends Screen{
     }
 
     @Override
-    public void render() {
+    public void render() throws IOException {
+
+        System.out.println("Add course screen.");
 
         // TODO Iterate through a list of fields to be filled by the user
         //  Validate these fields, check the database for the same class

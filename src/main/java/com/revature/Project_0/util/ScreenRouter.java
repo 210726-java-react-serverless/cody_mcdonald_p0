@@ -3,19 +3,26 @@ package com.revature.Project_0.util;
 import com.revature.Project_0.exceptions.ScreenNotFoundException;
 import com.revature.Project_0.screens.Screen;
 
+import java.util.ArrayDeque;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ScreenRouter {
-    private static Screen lastscreen;
     private Screen currentScreen;
-    private Set<Screen> screens = new HashSet<>(); //hashset of screens for retrieval
+    //HashSet of screens for storing activated screens
+    private Set<Screen> screens = new HashSet<>();
+    //ArrayDeque to be used as a stack for "back" or "cancel" functionality.
+    private ArrayDeque<Screen> previousScreens;
 
-    public ScreenRouter addScreen(Screen screen) { //adds screens to the hashset
+    //Method to add a screen to the hashset.
+    public ScreenRouter addScreen(Screen screen) {
         screens.add(screen);
         return this;
     }
 
+    // Retrieves a route, then sets the current screen to the screen with a matching route by using Collection.Stream()
+    // to create a stream of Screen objects, filtering it to screens with the defined route, and finally
+    // returning the first instance of a stream with that route.
     public void navigate(String route) {
         currentScreen = screens.stream()
                 .filter(screen -> screen.getRoute().equals(route))
@@ -23,19 +30,16 @@ public class ScreenRouter {
                 .orElseThrow(ScreenNotFoundException::new);
     }
 
-    public void navigate(String route, Screen ls) {
-        lastscreen = ls;
-        currentScreen = screens.stream()
-                .filter(screen -> screen.getRoute().equals(route))
-                .findFirst()
-                .orElseThrow(ScreenNotFoundException::new);
-    }
+    public void goBack() throws ScreenNotFoundException{}
 
+
+    // Cleanses the history to free up memory after a user logs and to prevent potential security risks.
+    public void deleteHistory(){ previousScreens.clear(); }
+
+    // Getters
     public Screen getCurrentScreen() {
         return currentScreen;
     }
 
-    public static void setLastscreen(Screen lastscreen) {
-        ScreenRouter.lastscreen = lastscreen;
-    }
+    public ArrayDeque<Screen> getPreviousScreens() { return previousScreens; }
 }

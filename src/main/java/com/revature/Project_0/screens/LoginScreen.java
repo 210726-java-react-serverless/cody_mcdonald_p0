@@ -16,7 +16,8 @@ public class LoginScreen extends Screen {
         String un,pw;
 
 
-        System.out.println("Please enter your username:");
+        System.out.println("\nUser Login Screen\n" +
+                "Please enter your username:");
         un  = consoleReader.readLine();
         System.out.println("Please enter your password:");
         pw = consoleReader.readLine();

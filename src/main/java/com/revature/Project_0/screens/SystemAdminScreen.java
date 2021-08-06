@@ -3,6 +3,7 @@ package com.revature.Project_0.screens;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public class SystemAdminScreen extends Screen{
 
@@ -18,7 +19,7 @@ public class SystemAdminScreen extends Screen{
      */
 
     @Override
-    public void render() {
+    public void render() throws IOException {
 
         System.out.println("Awaken, my master.\n");
         System.out.println("1) Add new Faculty account.\n" +

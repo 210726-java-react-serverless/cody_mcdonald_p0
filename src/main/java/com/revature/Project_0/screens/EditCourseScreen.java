@@ -3,6 +3,7 @@ package com.revature.Project_0.screens;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public class EditCourseScreen extends Screen {
 
@@ -11,7 +12,13 @@ public class EditCourseScreen extends Screen {
     }
 
     @Override
-    public void render() {
+    public void render() throws IOException {
+
+        System.out.println("Edit course screen\n");
+
+        System.out.println("Please enter the name or ID of the course you would like to Edit.\n" +
+                "For a list of courses and their IDs, enter L or List." +
+                "To go back, enter B or Back.");
 
         //TODO Request course to be edited, check the database for entered course
         //  if the course is not found, ask if they would like to add it

@@ -3,6 +3,7 @@ package com.revature.Project_0.screens;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public class FacultyDashboardScreen extends Screen{
 
@@ -11,10 +12,15 @@ public class FacultyDashboardScreen extends Screen{
     }
 
     @Override
-    public void render() {
+    public void render() throws IOException {
 
-        System.out.println("Welcome, admin.\n" +//TODO +username
-                "Please state your desire.");
+        System.out.println("Faculty Screen\n\n" +
+                "Welcome, admin.\n" +//TODO +username
+                "Please select an option.\n" +
+                "1)\n" +
+                "2)\n" +
+                "3)\n" +
+                "4)\n");
 
         router.navigate("/welcome");
 

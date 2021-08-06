@@ -4,6 +4,7 @@ import com.revature.Project_0.services.CourseService;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public class ViewCoursesScreen extends Screen {
 
@@ -15,7 +16,7 @@ public class ViewCoursesScreen extends Screen {
     }
 
     @Override
-    public void render() {
+    public void render() throws IOException {
 
         System.out.println("The current courses are:");
         //TODO print out courses from database

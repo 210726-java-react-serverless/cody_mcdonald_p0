@@ -5,6 +5,7 @@ import com.revature.Project_0.services.UserService;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public class CourseRegistrationScreen extends Screen {
 
@@ -16,7 +17,9 @@ public class CourseRegistrationScreen extends Screen {
     }
 
     @Override
-    public void render() {
+    public void render() throws IOException {
+
+        System.out.println("The available courses are:");
 
         //  TODO Print a list of available courses, will take shorthand and full course names
         //      E.G. "CS101" or "Computer Science 101"

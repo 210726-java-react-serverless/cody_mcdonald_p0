@@ -17,7 +17,6 @@ import java.io.InputStreamReader;
 public class AppState {
 
     private static boolean appRunning;
-    private AppUser currentuser;
     private final ScreenRouter router;
 
 
@@ -69,8 +68,8 @@ public class AppState {
      *  Making this a static method makes it easily accessible and reduces code duplication
      *  --also making another appstate object for passing around would be rather dangerous.
      */
-    public static void setAppRunning(boolean appRunning) {
+    public static void closeApp() {
         System.out.println("Shutting down...");
-        AppState.appRunning = appRunning;
+        AppState.appRunning = false;
     }
 }

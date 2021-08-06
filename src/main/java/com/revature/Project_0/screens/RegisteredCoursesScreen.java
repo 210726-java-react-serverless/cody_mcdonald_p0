@@ -4,6 +4,7 @@ import com.revature.Project_0.services.CourseService;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public class RegisteredCoursesScreen extends Screen {
 
@@ -15,7 +16,7 @@ public class RegisteredCoursesScreen extends Screen {
     }
 
     @Override
-    public void render() {
+    public void render() throws IOException {
 
         //TODO check if students have > 0 registered courses
         // if they do, then print them to the command line
