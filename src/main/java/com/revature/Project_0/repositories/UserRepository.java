@@ -4,7 +4,7 @@ import com.revature.Project_0.models.AppUser;
 
 public class UserRepository implements CrudRepository<AppUser>{
 
-    //TODO print user info to repository
+    //TODO push user info to repository
 
     @Override
     public AppUser findByID(int id) {

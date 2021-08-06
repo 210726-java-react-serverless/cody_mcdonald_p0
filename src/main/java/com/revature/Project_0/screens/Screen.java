@@ -26,6 +26,6 @@ public abstract class Screen {
         return route;
     }
 
-    public abstract void render(); //to be modified by subclasses
+    public abstract void render() throws Exception; //to be modified by subclasses, executes the print and input for the designated screen
 
 }

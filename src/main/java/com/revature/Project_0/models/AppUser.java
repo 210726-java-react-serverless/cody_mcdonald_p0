@@ -3,7 +3,7 @@ package com.revature.Project_0.models;
 public class AppUser {
 
     private int id;
-    private boolean adminUser;
+    private boolean isFaculty; //boolean to determine if the user is faculty or student
     private String firstName, lastName, email, username, password;
 
     public AppUser(String fn, String ln, String email, String un, String pw, boolean userType ){
@@ -12,7 +12,7 @@ public class AppUser {
         this.email = email;
         this.username = un;
         this.password = pw;
-        this.adminUser = userType;
+        this.isFaculty = userType;
     }
 
     public int getId() {
@@ -24,11 +24,11 @@ public class AppUser {
     }
 
     public boolean isAdminUser() {
-        return adminUser;
+        return isFaculty;
     }
 
     public void setAdminUser(boolean adminUser) {
-        this.adminUser = adminUser;
+        this.isFaculty = adminUser;
     }
 
     public String getFirstName() {

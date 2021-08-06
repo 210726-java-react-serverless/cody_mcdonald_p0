@@ -13,6 +13,9 @@ public class FacultyDashboardScreen extends Screen{
     @Override
     public void render() {
 
+        System.out.println("eeeeeee");
+        router.navigate("/welcome");
+
         //TODO Print available user options
 
     }
