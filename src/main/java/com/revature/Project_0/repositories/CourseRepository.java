@@ -4,7 +4,7 @@ import com.revature.Project_0.models.Course;
 
 public class CourseRepository implements CrudRepository<Course> {
 
-    //TODO methods to verify and push course info to repository
+    //TODO
     // methods to pull course info from repository
 
 

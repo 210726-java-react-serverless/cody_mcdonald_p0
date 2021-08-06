@@ -1,18 +1,25 @@
 package com.revature.Project_0.util;
-
+import com.revature.Project_0.models.AppUser;
 import com.revature.Project_0.repositories.CourseRepository;
 import com.revature.Project_0.repositories.UserRepository;
 import com.revature.Project_0.services.CourseService;
 import com.revature.Project_0.services.UserService;
 import com.revature.Project_0.screens.*;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+/*
+ * The "heart" of the program.
+ * Currently instantiates all of the screens.
+ * Contains static variable and object references used by the Screens.
+ *
+ */
 
 public class AppState {
 
     private static boolean appRunning;
+    private AppUser currentuser;
     private final ScreenRouter router;
+
 
     public AppState() {
         appRunning = true;
@@ -37,10 +44,11 @@ public class AppState {
                 .addScreen(new StudentDashboardScreen(consoleReader, router))
                 .addScreen(new LoginScreen(consoleReader, router))
                 .addScreen(new ViewCoursesScreen(consoleReader, router, courseService))
+                .addScreen(new SystemAdminScreen(consoleReader, router))
                 .addScreen(new newStudentScreen(consoleReader, router));
         ;
         //TODO Kinda ugly and unnecessary to load all screens at once
-        //  implement a screen singleton factory that loads screens as needed later
+        //  implement a factory that loads screens as needed later
 
 
     }
@@ -57,7 +65,10 @@ public class AppState {
         }
 
     }
-
+    /* Static methods can be accessed direction from an object's constructor
+     *  Making this a static method makes it easily accessible and reduces code duplication
+     *  --also making another appstate object for passing around would be rather dangerous.
+     */
     public static void setAppRunning(boolean appRunning) {
         System.out.println("Shutting down...");
         AppState.appRunning = appRunning;

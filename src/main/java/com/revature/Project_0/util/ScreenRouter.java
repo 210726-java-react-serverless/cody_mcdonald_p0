@@ -7,8 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class ScreenRouter {
+    private static Screen lastscreen;
     private Screen currentScreen;
-    private Screen previousScreen;
     private Set<Screen> screens = new HashSet<>(); //hashset of screens for retrieval
 
     public ScreenRouter addScreen(Screen screen) { //adds screens to the hashset
@@ -23,7 +23,19 @@ public class ScreenRouter {
                 .orElseThrow(ScreenNotFoundException::new);
     }
 
+    public void navigate(String route, Screen ls) {
+        lastscreen = ls;
+        currentScreen = screens.stream()
+                .filter(screen -> screen.getRoute().equals(route))
+                .findFirst()
+                .orElseThrow(ScreenNotFoundException::new);
+    }
+
     public Screen getCurrentScreen() {
         return currentScreen;
+    }
+
+    public static void setLastscreen(Screen lastscreen) {
+        ScreenRouter.lastscreen = lastscreen;
     }
 }
