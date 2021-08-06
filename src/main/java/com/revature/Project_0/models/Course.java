@@ -1,19 +1,25 @@
 package com.revature.Project_0.models;
 
+import java.util.Date;
+
 public class Course {
 
     private int id;
     private String courseName, shortHandName, courseDetail;
-    private boolean courseOpen, cancelWindow;
+    private boolean courseOpen= true, cancelWindow = true;
+    //A course is set to open when it is created
+    //Probably not a good idea if this is a new application being applied to an existing campus
+    // mid-semester or a year-round campus (such as online campuses)
+    Date openDate = new Date();
+    Date closeDate = new Date();
 
-    public Course(String cn, String shnd, String detail, boolean open, boolean cnl){
+
+    public Course(String cn, String abbreviation, String detail){
         this.courseName = cn;
-        this.shortHandName = shnd;
+        this.shortHandName = abbreviation;
         this.courseDetail = detail;
-        this.courseOpen = open;
-        this.cancelWindow = cnl;
-
     }
+    //TODO base course open/close on dates instead of booleans that must be manually updated
 
     public int getId() {
         return id;

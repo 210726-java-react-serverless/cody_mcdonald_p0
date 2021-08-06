@@ -11,7 +11,7 @@ import java.io.InputStreamReader;
 
 public class AppState {
 
-    private boolean appRunning;
+    private static boolean appRunning;
     private final ScreenRouter router;
 
     public AppState() {
@@ -31,14 +31,13 @@ public class AppState {
                 .addScreen(new CourseRegistrationScreen(consoleReader, router, courseService))
                 .addScreen(new EditCourseScreen(consoleReader, router))
                 .addScreen(new FacultyDashboardScreen(consoleReader, router))
-                .addScreen(new FacultyLoginScreen(consoleReader, router))
                 .addScreen(new JoinCourseScreen(consoleReader, router, courseService))
                 .addScreen(new RegisteredCoursesScreen(consoleReader, router, courseService))
                 .addScreen(new RemoveCourseScreen(consoleReader, router, courseService))
                 .addScreen(new StudentDashboardScreen(consoleReader, router))
-                .addScreen(new StudentLoginScreen(consoleReader, router))
+                .addScreen(new LoginScreen(consoleReader, router))
                 .addScreen(new ViewCoursesScreen(consoleReader, router, courseService))
-                .addScreen(new StudentRegisterScreen(consoleReader, router));
+                .addScreen(new newStudentScreen(consoleReader, router));
         ;
         //TODO Kinda ugly and unnecessary to load all screens at once
         //  implement a screen singleton factory that loads screens as needed later
@@ -49,7 +48,7 @@ public class AppState {
     public void startup() {
         router.navigate("/welcome");        //display welcome screen on startup
 
-        while (appRunning) {
+        while (appRunning) {                    //while the app is running, render the current screen
             try {
                 router.getCurrentScreen().render();
             } catch (Exception e) {
@@ -57,5 +56,10 @@ public class AppState {
             }
         }
 
+    }
+
+    public static void setAppRunning(boolean appRunning) {
+        System.out.println("Shutting down...");
+        AppState.appRunning = appRunning;
     }
 }

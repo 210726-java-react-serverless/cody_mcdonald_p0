@@ -7,7 +7,7 @@ import java.io.BufferedReader;
 public class StudentDashboardScreen extends Screen{
 
     public StudentDashboardScreen(BufferedReader consoleReader, ScreenRouter router) {
-        super("StudentHomeScreen", "/new-course", consoleReader, router);
+        super("StudentHomeScreen", "/student-home", consoleReader, router);
     }
 
     @Override
@@ -19,6 +19,9 @@ public class StudentDashboardScreen extends Screen{
                 "\n3) View registered courses" +
                 "\n4) Cancel course registration." +
                 "\n5) Log out.");
+
+        System.out.println("eeeeeee");
+        router.navigate("/welcome");
 
         //TODO Take user input, validate it, and perform operations as expected with a switch
 

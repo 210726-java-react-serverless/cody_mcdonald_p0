@@ -26,6 +26,13 @@ public class UserService {
         return null;
     }
 
+
+    /*Validating that all entries are:
+     * Not null or empty.
+     *
+     * TODO: Adhere to business standards (usernames are > 4 and <24 characters, passwords must not match other entries )
+     */
+
     public boolean isUserValid(AppUser user) {
         if (user == null) return false;
         if (user.getFirstName() == null || user.getFirstName().trim().equals("")) return false;
