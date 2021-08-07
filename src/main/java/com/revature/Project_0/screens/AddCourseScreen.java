@@ -1,25 +1,19 @@
 package com.revature.Project_0.screens;
 
-import com.revature.Project_0.documents.AppUser;
 import com.revature.Project_0.documents.Course;
 import com.revature.Project_0.services.CourseService;
-import com.revature.Project_0.util.InputValidator;
 import com.revature.Project_0.util.ScreenRouter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
-import static com.revature.Project_0.util.AppState.closeApp;
 
 
 public class AddCourseScreen extends Screen{
 
-    private final Logger logger = LogManager.getLogger(newStudentScreen.class);
+    private final Logger logger = LogManager.getLogger(NewStudentScreen.class);
     private final CourseService courseService;
 
     public AddCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {

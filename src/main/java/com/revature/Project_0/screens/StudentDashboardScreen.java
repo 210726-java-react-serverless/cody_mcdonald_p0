@@ -21,7 +21,7 @@ public class StudentDashboardScreen extends Screen {
 
         AppUser currentUser = userService.getSession().getCurrentUser();
 
-        System.out.println("Welcome, "+currentUser.getFirstName()+"."); //TODO "Welcome, "+studentName
+        System.out.println("Welcome, "+currentUser.getFirstName()+".");
         System.out.println("Please select an option." +
                 "\n1) View available courses." +
                 "\n2) Register for a course." +

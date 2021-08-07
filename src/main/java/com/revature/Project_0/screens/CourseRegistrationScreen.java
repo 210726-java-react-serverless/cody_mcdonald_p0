@@ -19,11 +19,11 @@ public class CourseRegistrationScreen extends Screen {
     @Override
     public void render() throws IOException {
 
-        System.out.println("Course Registration Screen:\n");
-        System.out.println("1) Register for a course\n" +
+        System.out.println("Course Registration Screen:\n\n" +
+                "1) Register for a course\n" +
                 "2) View Available Courses\n" +
                 "3) Cancel Course Registration\n" +
-                "4) Go back" +
+                "4) Go back\n" +
                 "5) View Registered Courses\n" +
                 "6) Return to dashboard\n");
 

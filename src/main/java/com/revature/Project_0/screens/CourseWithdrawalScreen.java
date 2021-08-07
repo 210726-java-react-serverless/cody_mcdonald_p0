@@ -25,16 +25,16 @@ public class CourseWithdrawalScreen extends Screen {
 
             System.out.println("Please Select an Option.\n" +
                     "1) Begin withdrawal process\n" +
-                    "2) Return to previous screen\n" +
+                    "2) Previous screen\n" +
                     "3) View registered classes\n" +
-                    "4) Press enter to try again.\n" +
-                    "An invalid value will return you to the Student dashboard.");
+                    "4) Return to Dashboard.\n");
 
             String userSelection = consoleReader.readLine();
 
             switch(userSelection)
             {
                 case "1":
+                    //TODO: verify that the student has any registered courses
                     System.out.println("Enter the Name, abbreviation, or ID of the course\n" +
                             "you would like to withdraw from:");
                     String markedForDeletion = consoleReader.readLine();
@@ -68,7 +68,7 @@ public class CourseWithdrawalScreen extends Screen {
                     router.navigate("/registered-courses");
                     break;
                 case "4":
-                    router.navigate("/remove-course");
+                    router.navigate("/student-home");
                 default:
                     System.out.println("Invalid entry, returning to Dashboard...");
             }

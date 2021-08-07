@@ -34,7 +34,7 @@ public class UserService {
             throw new ResourcePersistenceException("Provided email is already taken!");
         }
 
-
+        session.setCurrentUser(newUser);
         return userRepo.save(newUser);
 
     }

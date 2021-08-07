@@ -18,7 +18,7 @@ public class ViewCoursesScreen extends Screen {
     @Override
     public void render() throws IOException {
 
-        System.out.println("The current available courses are:");
+        System.out.println("The current available courses are:\n");
         //TODO print out courses from database
 
         router.goBack();

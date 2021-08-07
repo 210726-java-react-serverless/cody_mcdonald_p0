@@ -18,12 +18,13 @@ public class RemoveCourseScreen extends Screen {
     @Override
     public void render() throws IOException {
 
-        System.out.println("Course removal screen\n");
-
-        System.out.println("1) Begin the removal process\n" +
-                "2) Print a list of courses\n" +
-                "3) Go back\n" +
-                "4) Return to dashboard\n");
+         System.out.println("\nCourse Removal Screen\n\n" +
+                "Please select an option:\n" +
+                "1) Begin removal process\n" +
+                "2) Add Courses\n" +
+                "3) Edit Courses\n" +
+                "4) Previous Screen\n" +
+                "5) Return to Dashboard.\n");
 
         String userSelection  = consoleReader.readLine();
 
@@ -43,7 +44,7 @@ public class RemoveCourseScreen extends Screen {
                 switch (userVerification){
                     case "1":
                         System.out.println("Removing class...");
-                        //TODO remove the class from student's accounts and remove the class from the database
+                        //TODO remove the class from users' course lists and remove the course from the database
                         break;
                     case "2":
                         System.out.println("Canceling deletion process...");
@@ -54,19 +55,20 @@ public class RemoveCourseScreen extends Screen {
                 }
                 break;
             case "2":
-                System.out.println("The courses are:");
+                router.navigate("/new-course");
                 break;
             case "3":
-                router.goBack();
+                router.navigate("/edit-course");
                 break;
             case "4":
+                router.goBack();
+                break;
+            case "5":
                 router.navigate("/faculty-home");
+                break;
             default:
                 System.out.println("Invalid entry. Please try again.");
         }
 
-        //TODO Request course marked for deletion, will take shorthand and full course names
-        //  E.G. "CS101" or "Computer Science 101"
-        // if a valid course is entered, delete that course from the students' course list and then remove the course from the database
     }
 }

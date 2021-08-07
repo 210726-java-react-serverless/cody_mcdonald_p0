@@ -14,33 +14,64 @@ public class EditCourseScreen extends Screen {
     @Override
     public void render() throws IOException {
 
-        System.out.println("Edit course screen\n");
-
-        System.out.println("Please enter the name or ID of the course you would like to Edit.\n" +
-                "For a list of courses and their IDs, enter L or List.\n" +
-                "To go back, enter B or Back.");
+        System.out.println("\nEdit course screen\n\n" +
+                "Please select an option:\n" +
+                "1) Edit a Course\n" +
+                "2) Add Courses\n" +
+                "3) Remove Courses\n" +
+                "4) Previous Screen\n" +
+                "5) Return to Dashboard.\n");
 
         String userSelection  = consoleReader.readLine();
 
         switch(userSelection)
         {
-            case "L":
-            case "List":
-                System.out.println("Printing course list...");
+            case "1":
+                System.out.println("Enter the Name or abbreviation for the course\n" +
+                        "You would like to Edit:");
+                String markedForDeletion = consoleReader.readLine();
+                //TODO: verify course exists
+                System.out.println("Which field would you like to edit?\n\n" +
+                        "1) Course Name\n" +
+                        "2) Course abbreviation\n" +
+                        "3) Course description.\n" +
+                        "4) Close Course to new students/withdrawal requests\n");
+
+                String userSelection2 = consoleReader.readLine();
+                //TODO verify input, update database.
+                switch (userSelection2){
+                    case "1":
+                        System.out.println("Enter the new course name.");
+                        break;
+                    case "2":
+                        System.out.println("Enter the new course abbreviation.");
+                        break;
+                    case "3":
+                        System.out.println("Enter the new course description.");
+                        break;
+                    case "4":
+                        System.out.println("Course closed.");
+                        break;
+                    default:
+                        System.out.println("Invalid entry, canceling edit process...");
+
+                }
                 break;
-            case "B":
-            case "Back":
+            case "2":
+                router.navigate("/new-course");
+                break;
+            case "3":
+                router.navigate("/remove-course");
+                break;
+            case "4":
                 router.goBack();
+                break;
+            case "5":
+                router.navigate("/faculty-home");
                 break;
             default:
                 System.out.println("Invalid entry. Please try again.");
         }
-
-        //TODO Request course to be edited, check the database for entered course
-        //  if the course is not found, ask if they would like to add it
-        //  else if the course is found, print out the modifiable fields for the course
-        //  Iterate through the fields that can be modified
-        // validate the data, if there are no issues then apply the updates to database
 
     }
 }

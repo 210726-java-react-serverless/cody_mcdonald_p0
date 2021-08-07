@@ -1,7 +1,9 @@
 package com.revature.Project_0.util;
 import com.revature.Project_0.repositories.CourseRepository;
+import com.revature.Project_0.repositories.UserCoursesRepository;
 import com.revature.Project_0.repositories.UserRepository;
 import com.revature.Project_0.services.CourseService;
+import com.revature.Project_0.services.UserCoursesService;
 import com.revature.Project_0.services.UserService;
 import com.revature.Project_0.screens.*;
 import java.io.BufferedReader;
@@ -29,8 +31,12 @@ public class AppState {
         UserRepository userRepo = new UserRepository();
         UserService userService = new UserService(userRepo, userSession);
 
+
         CourseRepository courseRepo = new CourseRepository();
         CourseService courseService = new CourseService(courseRepo);
+
+        UserCoursesRepository courseListRepo = new UserCoursesRepository();
+        UserCoursesService userCoursesService = new UserCoursesService(courseListRepo, userSession);
 
         //Instantiate Screens
         router.addScreen(new WelcomeScreen(consoleReader, router))
@@ -44,7 +50,7 @@ public class AppState {
                 .addScreen(new LoginScreen(consoleReader, router, userService))
                 .addScreen(new ViewCoursesScreen(consoleReader, router, courseService))
                 .addScreen(new SystemAdminScreen(consoleReader, router))
-                .addScreen(new newStudentScreen(consoleReader, router, userService))
+                .addScreen(new NewStudentScreen(consoleReader, router, userService, userCoursesService))
                 .addScreen(new CourseWithdrawalScreen(consoleReader, router, courseService));
         ;
 
@@ -62,6 +68,7 @@ public class AppState {
                 router.getCurrentScreen().render();
             } catch (Exception e) {
                 e.printStackTrace();
+                return;
             }
         }
 
