@@ -1,7 +1,9 @@
 package com.revature.Project_0;
 
-import com.revature.Project_0.screens.WelcomeScreen;
+
 import com.revature.Project_0.util.AppState;
+
+
 
 public class CourseManagementApp {
 

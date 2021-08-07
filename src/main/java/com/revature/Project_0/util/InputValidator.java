@@ -10,13 +10,13 @@ package com.revature.Project_0.util;
  */
 
 
-import com.revature.Project_0.exceptions.InvalidEntryException;
+import com.revature.Project_0.util.exceptions.InvalidEntryException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-public class inputValidator {
+public class InputValidator {
 
     // Pattern for username verification, can be any character from a-z, A-Z, and 0-9. No symbols permitted.
     static Pattern usernamePattern = Pattern.compile("[^a-zA-Z0-9]");

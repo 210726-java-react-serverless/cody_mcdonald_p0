@@ -25,8 +25,10 @@ public class AppState {
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
 
         // Create app components
+        UserSession userSession = new UserSession();
         UserRepository userRepo = new UserRepository();
-        UserService userService = new UserService(userRepo);
+        UserService userService = new UserService(userRepo, userSession);
+
         CourseRepository courseRepo = new CourseRepository();
         CourseService courseService = new CourseService(courseRepo);
 
@@ -39,14 +41,15 @@ public class AppState {
                 .addScreen(new RegisteredCoursesScreen(consoleReader, router, courseService))
                 .addScreen(new RemoveCourseScreen(consoleReader, router, courseService))
                 .addScreen(new StudentDashboardScreen(consoleReader, router))
-                .addScreen(new LoginScreen(consoleReader, router))
+                .addScreen(new LoginScreen(consoleReader, router, userService))
                 .addScreen(new ViewCoursesScreen(consoleReader, router, courseService))
                 .addScreen(new SystemAdminScreen(consoleReader, router))
-                .addScreen(new newStudentScreen(consoleReader, router))
+                .addScreen(new newStudentScreen(consoleReader, router, userService))
                 .addScreen(new CourseWithdrawalScreen(consoleReader, router, courseService));
         ;
+
         //TODO Kinda ugly and unnecessary to load all screens at once
-        //  implement a factory that loads screens as needed later
+        //  maybe implement a factory that loads screens as needed later
 
 
     }

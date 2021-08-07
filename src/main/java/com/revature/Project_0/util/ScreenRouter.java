@@ -1,6 +1,6 @@
 package com.revature.Project_0.util;
 
-import com.revature.Project_0.exceptions.ScreenNotFoundException;
+import com.revature.Project_0.util.exceptions.ScreenNotFoundException;
 import com.revature.Project_0.screens.Screen;
 
 import java.util.ArrayDeque;

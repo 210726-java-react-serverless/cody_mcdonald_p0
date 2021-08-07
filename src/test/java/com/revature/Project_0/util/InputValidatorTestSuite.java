@@ -1,11 +1,11 @@
 package com.revature.Project_0.util;
 
-import com.revature.Project_0.exceptions.InvalidEntryException;
+import com.revature.Project_0.util.exceptions.InvalidEntryException;
 import org.junit.*;
 
 
 
-public class inputValidatorTestSuite {
+public class InputValidatorTestSuite {
 
 
     @Before
@@ -17,7 +17,7 @@ public class inputValidatorTestSuite {
     public void userEntryValidator_throwsException_whenGivenBlankValues(){
 
         Assert.assertThrows(InvalidEntryException.class,() -> {
-            inputValidator.userEntryValidator("","","","","");
+            InputValidator.userEntryValidator("","","","","");
         });
     }
 

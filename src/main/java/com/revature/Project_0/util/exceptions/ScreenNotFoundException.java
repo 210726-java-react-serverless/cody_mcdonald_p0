@@ -1,4 +1,4 @@
-package com.revature.Project_0.exceptions;
+package com.revature.Project_0.util.exceptions;
 
 public class ScreenNotFoundException extends RuntimeException {
 

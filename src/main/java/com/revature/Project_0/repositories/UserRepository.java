@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
-import com.revature.Project_0.exceptions.DataSourceException;
+import com.revature.Project_0.util.exceptions.DataSourceException;
 import com.revature.Project_0.documents.AppUser;
 import com.revature.Project_0.util.MongoClientFactory;
 import org.bson.Document;
@@ -41,7 +41,16 @@ public class UserRepository implements CrudRepository<AppUser>{
 
     }
 
-    //TODO push user info to repository
+    // TODO implement this to prevent multiple users from having the same username!
+    public AppUser findUserByUsername(String username) {
+        return null;
+    }
+
+    // TODO implement this to prevent multiple users from having the same email!
+    public AppUser findUserByEmail(String email) {
+        return null;
+    }
+
 
     @Override
     public AppUser findByID(int id) {
@@ -49,8 +58,31 @@ public class UserRepository implements CrudRepository<AppUser>{
     }
 
     @Override
-    public AppUser save(AppUser newResource) {
-        return null;
+    public AppUser save(AppUser newUser) {
+
+
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+
+            MongoDatabase bookstoreDb = mongoClient.getDatabase("p0");
+            MongoCollection<Document> usersCollection = bookstoreDb.getCollection("users");
+            Document newUserDoc = new Document("firstName", newUser.getFirstName())
+                    .append("lastName", newUser.getLastName())
+                    .append("email", newUser.getEmail())
+                    .append("username", newUser.getUsername())
+                    .append("password", newUser.getPassword())
+                    .append("isFaculty", newUser.isFaculty());
+
+            usersCollection.insertOne(newUserDoc);
+            newUser.setId(newUserDoc.get("_id").toString());
+
+            return newUser;
+
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
+
     }
 
     @Override

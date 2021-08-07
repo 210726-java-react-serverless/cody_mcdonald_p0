@@ -1,9 +1,17 @@
 package com.revature.Project_0.documents;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.Objects;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class AppUser {
 
     private boolean isFaculty; //boolean to determine if the user is faculty or student
     private String id, firstName, lastName, email, username, password;
+
+    //Jackson requires a no-args constructor
+    public AppUser(){ super(); }
 
     public AppUser(String fn, String ln, String email, String un, String pw, boolean userType ){
         this.firstName = fn;
@@ -14,6 +22,7 @@ public class AppUser {
         this.isFaculty = userType;
     }
 
+    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -68,5 +77,35 @@ public class AppUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isFaculty() { return isFaculty; }
+
+    public void setFaculty(boolean faculty) { isFaculty = faculty; }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, email, username, password, isFaculty);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj ) return true;
+        else if (obj == null || getClass() != obj.getClass()) return false;
+        AppUser appUser = (AppUser) obj;
+        return Objects.equals(id, appUser.id) && Objects.equals(firstName, appUser.firstName) && Objects.equals(lastName, appUser.lastName) && Objects.equals(email, appUser.email) && Objects.equals(username, appUser.username) && Objects.equals(password, appUser.password) && Objects.equals(isFaculty, appUser.isFaculty);
+    }
+
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "id='" + id + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", isFaculty=" + isFaculty +
+                '}';
     }
 }

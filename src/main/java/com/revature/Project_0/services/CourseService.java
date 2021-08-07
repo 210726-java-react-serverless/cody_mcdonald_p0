@@ -1,6 +1,6 @@
 package com.revature.Project_0.services;
 
-import com.revature.Project_0.exceptions.InvalidEntryException;
+import com.revature.Project_0.util.exceptions.InvalidEntryException;
 import com.revature.Project_0.documents.Course;
 import com.revature.Project_0.repositories.CourseRepository;
 

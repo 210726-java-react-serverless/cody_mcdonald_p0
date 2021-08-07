@@ -1,5 +1,8 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.documents.AppUser;
+import com.revature.Project_0.util.exceptions.AuthenticationException;
+import com.revature.Project_0.services.UserService;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
@@ -7,31 +10,39 @@ import java.io.IOException;
 
 public class LoginScreen extends Screen {
 
-    public LoginScreen(BufferedReader consoleReader, ScreenRouter router) {
+    private final UserService userService;
+
+    public LoginScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService) {
         super("LoginScreen", "/login", consoleReader, router);
+        this.userService = userService;
     }
 
     @Override
     public void render() throws IOException {
         String un,pw;
 
-
         System.out.println("\nUser Login Screen\n" +
                 "Please enter your username:");
+
         un  = consoleReader.readLine();
+
         System.out.println("Please enter your password:");
+
         pw = consoleReader.readLine();
+
         System.out.println("Validating....");
 
-        //TODO replace this with actual validation
-        if(un.equals("admin")){
-            System.out.println("Woops, didn't implement this yet. Come on in!");
-            router.navigate("/faculty-home");
-        }else if(un.equals("student")){
-            System.out.println("Woops, didn't implement this yet. Come on in!");
-            router.navigate("/student-home");
-        }else {
-            System.out.println("Invalid credentials, returning to home...");
+        try {
+            AppUser authUser = userService.login(un, pw);
+            System.out.println("Login successful!");
+            if(authUser.isAdminUser())
+                router.navigate("/faculty-home");
+            else
+                router.navigate("/student-home");
+
+        } catch (AuthenticationException ae) {
+            System.out.println("No user found with provided credentials!");
+            System.out.println("Navigating back to welcome screen...");
             router.navigate("/welcome");
         }
 

@@ -1,21 +1,29 @@
 package com.revature.Project_0.screens;
 
-import com.revature.Project_0.exceptions.InvalidEntryException;
+import com.revature.Project_0.documents.AppUser;
+import com.revature.Project_0.services.UserService;
 import com.revature.Project_0.util.ScreenRouter;
-import com.revature.Project_0.util.inputValidator;
-import org.omg.CORBA.DynAnyPackage.Invalid;
+import com.revature.Project_0.util.InputValidator;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
+
 public class newStudentScreen extends Screen {
 
-    public newStudentScreen(BufferedReader consoleReader, ScreenRouter router) {
+    private final Logger logger = LogManager.getLogger(newStudentScreen.class);
+    private final UserService userService;
+
+    public newStudentScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService) {
         super("newStudentScreen", "/new-student", consoleReader, router);
+        this.userService = userService;
     }
 
     @Override
-    public void render() throws IOException {
+    public void render() throws Exception {
         System.out.println("\nNew student Registration...\n");
 
         System.out.print("First name: ");
@@ -33,19 +41,18 @@ public class newStudentScreen extends Screen {
         System.out.print("\nPassword:\n*Must be a minimum of 8 characters. ");
         String password = consoleReader.readLine();
 
+        try{
+            InputValidator.userEntryValidator(firstName, lastName, email, username, password);
+            AppUser newUser = new AppUser(firstName, lastName, email, username, password, false);
+            userService.register(newUser);
+            System.out.println("Student registered!");
+            router.navigate("/student-home");
+        }catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.debug("User not registered!");
+            router.navigate("/welcome");
+        }
 
-        inputValidator.userEntryValidator(firstName, lastName, email, username, password);
-        System.out.println("User registered!"); //TODO Actually register user.
-
-        router.navigate("/welcome");
-
-
-        System.out.println("Under construction, please come again!");
-
-
-        //TODO prompt user for information, validate it, then compare it against the database.
-        //  Lastly, add the user to the database if there are no issues.
-        //      Not finally because that would add it anyways. :)
 
     }
 }

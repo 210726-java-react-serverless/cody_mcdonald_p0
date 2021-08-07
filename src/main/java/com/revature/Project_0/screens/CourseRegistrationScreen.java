@@ -50,7 +50,7 @@ public class CourseRegistrationScreen extends Screen {
                 router.navigate("/student-home");
                 break;
             case "6":
-                router.navigate("/registered")
+                router.navigate("/registered-courses");
             default:
                 System.out.println("Invalid entry.");
         }
