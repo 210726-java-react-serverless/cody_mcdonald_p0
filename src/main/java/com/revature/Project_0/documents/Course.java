@@ -1,25 +1,31 @@
 package com.revature.Project_0.documents;
 
-import java.util.Date;
+
+import java.util.Objects;
 
 public class Course {
 
-    private int id;
-    private String courseName, courseDetail;
-    private Date openDate = new Date();
-    private Date closeDate = new Date();
 
+    private String id, courseName, courseAbbreviation, courseDetail;
+    private boolean isOpen;
 
-    public Course(String cn, String detail){this.courseName = cn;this.courseDetail = detail;}
+    public Course(){ super(); }
 
-    public int getId() {
-        return id;
+    public Course(String cn, String cAbv, String detail) {
+        this.courseName = cn;
+        this.courseAbbreviation = cAbv;
+        this.courseDetail = detail;
     }
 
-    public void setId(int id) {
+    public Course(String id, String cn, String cAbv, String detail){
         this.id = id;
+        this.courseName = cn;
+        this.courseAbbreviation = cAbv;
+        this.courseDetail = detail;
     }
 
+
+    // Setters and getters
     public String getCourseName() {
         return courseName;
     }
@@ -36,11 +42,28 @@ public class Course {
         this.courseDetail = courseDetail;
     }
 
-    public Date getOpenDate() { return openDate; }
+    public void setId(String id) { this.id = id; }
 
-    public void setOpenDate(Date openDate) { this.openDate = openDate; }
+    public String getCourseAbbreviation() { return courseAbbreviation; }
 
-    public Date getCloseDate() { return closeDate;}
+    public void setCourseAbbreviation(String courseAbbreviation) { this.courseAbbreviation = courseAbbreviation; }
 
-    public void setCloseDate(Date closeDate) {this.closeDate = closeDate;}
+    public boolean isOpen() { return isOpen; }
+
+    public void setOpen(boolean open) { isOpen = open; }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, courseName, courseAbbreviation, courseDetail, isOpen);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
 }

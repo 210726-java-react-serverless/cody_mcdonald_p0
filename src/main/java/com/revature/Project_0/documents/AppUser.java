@@ -7,8 +7,9 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AppUser {
 
-    private boolean isFaculty; //boolean to determine if the user is faculty or student
+
     private String id, firstName, lastName, email, username, password;
+    private boolean isFaculty; //boolean to determine if the user is faculty or student
 
     //Jackson requires a no-args constructor
     public AppUser(){ super(); }
@@ -31,11 +32,11 @@ public class AppUser {
         this.id = id;
     }
 
-    public boolean isAdminUser() {
+    public boolean isFaculty() {
         return isFaculty;
     }
 
-    public void setAdminUser(boolean adminUser) {
+    public void setFaculty(boolean adminUser) {
         this.isFaculty = adminUser;
     }
 
@@ -78,10 +79,6 @@ public class AppUser {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public boolean isFaculty() { return isFaculty; }
-
-    public void setFaculty(boolean faculty) { isFaculty = faculty; }
 
     @Override
     public int hashCode() {

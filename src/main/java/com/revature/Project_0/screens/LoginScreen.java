@@ -35,7 +35,8 @@ public class LoginScreen extends Screen {
         try {
             AppUser authUser = userService.login(un, pw);
             System.out.println("Login successful!");
-            if(authUser.isAdminUser())
+
+            if(authUser.isFaculty())
                 router.navigate("/faculty-home");
             else
                 router.navigate("/student-home");
@@ -45,15 +46,5 @@ public class LoginScreen extends Screen {
             System.out.println("Navigating back to welcome screen...");
             router.navigate("/welcome");
         }
-
-
-
-
-        //TODO prompt user for username+password, validate it, then compare it against the database.
-        //  Check if the user is an Admin or a Student.
-        //  Lastly, log the user into the proper dashboard if there are no issues.
-        //      Not finally because that would log them in anyways. :)
-
-
     }
 }
