@@ -1,5 +1,7 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.documents.AppUser;
+import com.revature.Project_0.services.UserService;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
@@ -7,13 +9,19 @@ import java.io.IOException;
 
 public class StudentDashboardScreen extends Screen {
 
-    public StudentDashboardScreen(BufferedReader consoleReader, ScreenRouter router) {
+    private final UserService userService;
+
+    public StudentDashboardScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService) {
         super("StudentHomeScreen", "/student-home", consoleReader, router);
+        this.userService = userService;
     }
 
     @Override
     public void render() throws IOException {
-        System.out.println("Welcome, user."); //TODO "Welcome, "+studentName
+
+        AppUser currentUser = userService.getSession().getCurrentUser();
+
+        System.out.println("Welcome, "+currentUser.getFirstName()+"."); //TODO "Welcome, "+studentName
         System.out.println("Please select an option." +
                 "\n1) View available courses." +
                 "\n2) Register for a course." +

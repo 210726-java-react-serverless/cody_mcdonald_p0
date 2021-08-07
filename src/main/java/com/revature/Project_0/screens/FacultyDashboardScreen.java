@@ -1,5 +1,7 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.documents.AppUser;
+import com.revature.Project_0.services.UserService;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
@@ -9,15 +11,20 @@ import static com.revature.Project_0.util.AppState.closeApp;
 
 public class FacultyDashboardScreen extends Screen{
 
-    public FacultyDashboardScreen(BufferedReader consoleReader, ScreenRouter router) {
+    private final UserService userService;
+
+    public FacultyDashboardScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService) {
         super("FacultyHomeScreen", "/faculty-home", consoleReader, router);
+        this.userService = userService;
     }
 
     @Override
     public void render() throws IOException {
 
+        AppUser currentUser = userService.getSession().getCurrentUser();
+
         System.out.println("Faculty Screen\n\n" +
-                "Welcome, admin.\n" +//TODO +username
+                "Welcome, " + currentUser.getFirstName()+ ".\n" +
                 "Please select an option.\n" +
                 "1) Add a new course.\n" +
                 "2) Edit a course.\n" +
@@ -42,7 +49,6 @@ public class FacultyDashboardScreen extends Screen{
                 System.out.println("Logging out...");
                 router.navigate("/welcome");
                 router.deleteHistory();
-                System.out.println("History deleted!");
                 break;
             default:
                 System.out.println("Invalid entry. Please try again.");
