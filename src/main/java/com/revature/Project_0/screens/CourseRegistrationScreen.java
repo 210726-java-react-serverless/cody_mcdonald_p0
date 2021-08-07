@@ -35,6 +35,7 @@ public class CourseRegistrationScreen extends Screen {
                 String joiningCourse = consoleReader.readLine();
                 System.out.println("Applying for course...");
                 //TODO validate, update database
+
                 System.out.println("Course application accepted!");
                 break;
             case "2":

@@ -11,10 +11,11 @@ public class Course {
 
     public Course(){ super(); }
 
-    public Course(String cn, String cAbv, String detail) {
+    public Course(String cn, String cAbv, String detail, boolean open) {
         this.courseName = cn;
         this.courseAbbreviation = cAbv;
         this.courseDetail = detail;
+        this.isOpen = open;
     }
 
     public Course(String id, String cn, String cAbv, String detail){
@@ -22,6 +23,14 @@ public class Course {
         this.courseName = cn;
         this.courseAbbreviation = cAbv;
         this.courseDetail = detail;
+    }
+
+    public Course(String id, String cn, String cAbv, String detail, boolean open){
+        this.id = id;
+        this.courseName = cn;
+        this.courseAbbreviation = cAbv;
+        this.courseDetail = detail;
+        this.isOpen = open;
     }
 
 

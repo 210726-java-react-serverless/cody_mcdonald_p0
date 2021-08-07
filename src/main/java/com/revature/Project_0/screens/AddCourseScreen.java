@@ -1,6 +1,12 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.documents.AppUser;
+import com.revature.Project_0.documents.Course;
+import com.revature.Project_0.services.CourseService;
+import com.revature.Project_0.util.InputValidator;
 import com.revature.Project_0.util.ScreenRouter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import sun.java2d.pipe.SpanShapeRenderer;
 
 import java.io.BufferedReader;
@@ -13,8 +19,12 @@ import static com.revature.Project_0.util.AppState.closeApp;
 
 public class AddCourseScreen extends Screen{
 
-    public AddCourseScreen(BufferedReader consoleReader, ScreenRouter router) {
+    private final Logger logger = LogManager.getLogger(newStudentScreen.class);
+    private final CourseService courseService;
+
+    public AddCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {
         super("AddCourseScreen", "/new-course", consoleReader, router);
+        this.courseService = courseService;
     }
 
     @Override
@@ -35,6 +45,7 @@ public class AddCourseScreen extends Screen{
                 "5) Return to Dashboard.\n");
 
         String userSelection  = consoleReader.readLine();
+
         switch (userSelection)
         {
             case "1":
@@ -47,7 +58,18 @@ public class AddCourseScreen extends Screen{
                 System.out.print("Course Description:");
                 courseDesc = consoleReader.readLine();
 
-                //TODO validate, print to database
+                try{
+                    //TODO course entry validation
+                    Course newCourse = new Course(courseName, courseAbv, courseDesc, true);
+                    courseService.add(newCourse);
+                    System.out.println("Course registered!");
+                    router.navigate("/new-course");
+                }catch (Exception e) {
+                    logger.error(e.getMessage());
+                    logger.debug("Course not registered!");
+                    router.navigate("/new-course");
+                }
+
                 System.out.println("Adding the course to the database...");
                 break;
             case "2":

@@ -36,9 +36,6 @@ public class UserRepository implements CrudRepository<AppUser>{
             // Handling the ID set by mongodb
             authUser.setId(authUserDoc.get("_id").toString());
             authUser.setFaculty((boolean)authUserDoc.get("isFaculty")); //i hate this
-            //debug
-            System.out.println(authUserDoc.toJson());
-            System.out.println(authUser);
             return authUser;
 
         } catch (JsonMappingException jme) {

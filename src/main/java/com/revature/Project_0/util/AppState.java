@@ -34,7 +34,7 @@ public class AppState {
 
         //Instantiate Screens
         router.addScreen(new WelcomeScreen(consoleReader, router))
-                .addScreen(new AddCourseScreen(consoleReader, router))
+                .addScreen(new AddCourseScreen(consoleReader, router, courseService))
                 .addScreen(new CourseRegistrationScreen(consoleReader, router, courseService))
                 .addScreen(new EditCourseScreen(consoleReader, router))
                 .addScreen(new FacultyDashboardScreen(consoleReader, router))
