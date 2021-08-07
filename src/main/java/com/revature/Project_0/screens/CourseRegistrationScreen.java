@@ -19,7 +19,41 @@ public class CourseRegistrationScreen extends Screen {
     @Override
     public void render() throws IOException {
 
-        System.out.println("The available courses are:");
+        System.out.println("Course Registration Screen:\n");
+        System.out.println("1) Register for a course\n" +
+                "2) View Available Courses\n" +
+                "3) Cancel Course Registration\n" +
+                "4) Go back" +
+                "5) View Registered Courses\n" +
+                "6) Return to dashboard\n");
+
+        String userSelection  = consoleReader.readLine();
+        switch (userSelection)
+        {
+            case "1":
+                System.out.print("Enter the name, abbreviation, or ID of the course you would like to join:");
+                String joiningCourse = consoleReader.readLine();
+                System.out.println("Applying for course...");
+                //TODO validate, update database
+                System.out.println("Course application accepted!");
+                break;
+            case "2":
+                router.navigate("/courses");
+                break;
+            case "3":
+                router.navigate("/course-withdrawal");
+                break;
+            case "4":
+                router.goBack();
+                break;
+            case "5":
+                router.navigate("/student-home");
+                break;
+            case "6":
+                router.navigate("/registered")
+            default:
+                System.out.println("Invalid entry.");
+        }
 
         //  TODO Print a list of available courses, will take shorthand and full course names
         //      E.G. "CS101" or "Computer Science 101"

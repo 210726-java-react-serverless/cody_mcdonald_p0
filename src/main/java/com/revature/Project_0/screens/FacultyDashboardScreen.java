@@ -48,7 +48,5 @@ public class FacultyDashboardScreen extends Screen{
                 System.out.println("Invalid entry. Please try again.");
         }
 
-        //TODO Print available user options
-
     }
 }

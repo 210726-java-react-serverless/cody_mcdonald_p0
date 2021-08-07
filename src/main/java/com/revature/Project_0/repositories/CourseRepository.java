@@ -1,6 +1,6 @@
 package com.revature.Project_0.repositories;
 
-import com.revature.Project_0.models.Course;
+import com.revature.Project_0.documents.Course;
 
 public class CourseRepository implements CrudRepository<Course> {
 

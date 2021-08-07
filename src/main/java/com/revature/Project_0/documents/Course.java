@@ -1,21 +1,16 @@
-package com.revature.Project_0.models;
+package com.revature.Project_0.documents;
 
 import java.util.Date;
 
 public class Course {
 
     private int id;
-    private String courseName, shortHandName, courseDetail;
+    private String courseName, courseDetail;
     private Date openDate = new Date();
     private Date closeDate = new Date();
 
 
-    public Course(String cn, String abbreviation, String detail){
-        this.courseName = cn;
-        this.shortHandName = abbreviation;
-        this.courseDetail = detail;
-    }
-    //TODO base course open/close on dates instead of booleans that must be manually updated
+    public Course(String cn, String detail){this.courseName = cn;this.courseDetail = detail;}
 
     public int getId() {
         return id;
@@ -31,14 +26,6 @@ public class Course {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    public String getShortHandName() {
-        return shortHandName;
-    }
-
-    public void setShortHandName(String shortHandName) {
-        this.shortHandName = shortHandName;
     }
 
     public String getCourseDetail() {

@@ -1,10 +1,9 @@
-package com.revature.Project_0.models;
+package com.revature.Project_0.documents;
 
 public class AppUser {
 
-    private int id;
     private boolean isFaculty; //boolean to determine if the user is faculty or student
-    private String firstName, lastName, email, username, password;
+    private String id, firstName, lastName, email, username, password;
 
     public AppUser(String fn, String ln, String email, String un, String pw, boolean userType ){
         this.firstName = fn;
@@ -15,11 +14,11 @@ public class AppUser {
         this.isFaculty = userType;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

@@ -1,7 +1,7 @@
 package com.revature.Project_0.services;
 
 import com.revature.Project_0.exceptions.InvalidEntryException;
-import com.revature.Project_0.models.AppUser;
+import com.revature.Project_0.documents.AppUser;
 import com.revature.Project_0.repositories.UserRepository;
 
 public class UserService {
@@ -30,7 +30,7 @@ public class UserService {
     /*Validating that all entries are:
      * Not null or empty.
      *
-     * TODO: Adhere to business standards (usernames are > 4, passwords cannot be the same as username etc. )
+     *
      */
 
     public boolean isUserValid(AppUser user) {

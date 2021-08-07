@@ -1,5 +1,4 @@
 package com.revature.Project_0.util;
-import com.revature.Project_0.models.AppUser;
 import com.revature.Project_0.repositories.CourseRepository;
 import com.revature.Project_0.repositories.UserRepository;
 import com.revature.Project_0.services.CourseService;
@@ -37,14 +36,14 @@ public class AppState {
                 .addScreen(new CourseRegistrationScreen(consoleReader, router, courseService))
                 .addScreen(new EditCourseScreen(consoleReader, router))
                 .addScreen(new FacultyDashboardScreen(consoleReader, router))
-                .addScreen(new JoinCourseScreen(consoleReader, router, courseService))
                 .addScreen(new RegisteredCoursesScreen(consoleReader, router, courseService))
                 .addScreen(new RemoveCourseScreen(consoleReader, router, courseService))
                 .addScreen(new StudentDashboardScreen(consoleReader, router))
                 .addScreen(new LoginScreen(consoleReader, router))
                 .addScreen(new ViewCoursesScreen(consoleReader, router, courseService))
                 .addScreen(new SystemAdminScreen(consoleReader, router))
-                .addScreen(new newStudentScreen(consoleReader, router));
+                .addScreen(new newStudentScreen(consoleReader, router))
+                .addScreen(new CourseWithdrawalScreen(consoleReader, router, courseService));
         ;
         //TODO Kinda ugly and unnecessary to load all screens at once
         //  implement a factory that loads screens as needed later
