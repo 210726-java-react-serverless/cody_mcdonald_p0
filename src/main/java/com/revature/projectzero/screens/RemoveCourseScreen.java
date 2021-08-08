@@ -2,6 +2,7 @@ package com.revature.projectzero.screens;
 
 import com.revature.projectzero.documents.Course;
 import com.revature.projectzero.services.CourseService;
+import com.revature.projectzero.services.UserCoursesService;
 import com.revature.projectzero.util.ScreenRouter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,10 +13,12 @@ import java.io.IOException;
 public class RemoveCourseScreen extends Screen {
     private final Logger logger = LogManager.getLogger(RemoveCourseScreen.class);
     private final CourseService courseService;
+    private final UserCoursesService userCoursesService;
 
-    public RemoveCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {
+    public RemoveCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService, UserCoursesService userCoursesService) {
         super("RemoveCourseScreen", "/remove-course", consoleReader, router);
         this.courseService = courseService;
+        this.userCoursesService = userCoursesService;
     }
 
     @Override
@@ -38,7 +41,8 @@ public class RemoveCourseScreen extends Screen {
                         "You would like to remove:");
                 String markedCourse = consoleReader.readLine();
                 try {
-                    Course editCourse = courseService.verifyCourse(markedCourse);
+                    Course removingCourse = courseService.verifyCourse(markedCourse);
+
                     System.out.println("This action cannot be undone, are you sure?\n" +
                             "1) Yes\n" +
                             "2) No\n");
@@ -48,9 +52,8 @@ public class RemoveCourseScreen extends Screen {
                     switch (userVerification) {
                         case "1":
                             System.out.println("Removing class...");
-                            courseService.removeCourse(editCourse);
-//                            userCoursesService.removeCourse(editCourse());
-                            //TODO remove the class from users' course lists as well
+                            userCoursesService.expungeCourse(removingCourse.getCourseName());
+                            courseService.removeCourse(removingCourse);
                             break;
                         case "2":
                             System.out.println("Canceling deletion process...");

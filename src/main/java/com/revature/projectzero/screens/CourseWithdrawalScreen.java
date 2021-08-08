@@ -11,23 +11,21 @@ import java.io.IOException;
 import java.util.List;
 
 public class CourseWithdrawalScreen extends Screen {
-    private final Logger logger = LogManager.getLogger(NewStudentScreen.class);
+    private final Logger logger = LogManager.getLogger(CourseWithdrawalScreen.class);
     private final CourseService courseService;
     private final UserCoursesService userCoursesService;
 
     public CourseWithdrawalScreen(BufferedReader consoleReader, ScreenRouter router,
                                   CourseService courseService, UserCoursesService userCoursesService) {
         super("RemoveCourseScreen", "/course-withdrawal", consoleReader, router);
-        this.userCoursesService = userCoursesService;
         this.courseService = courseService;
+        this.userCoursesService = userCoursesService;
     }
 
     @Override
     public void render() throws IOException {
 
         System.out.println("Course Withdrawal Screen.");
-
-
 
             System.out.println("Please Select an Option.\n" +
                     "1) Begin withdrawal process\n" +
@@ -53,10 +51,8 @@ public class CourseWithdrawalScreen extends Screen {
                         String courseName = userCoursesService.verifyCourseEntry(courses, marked);
                         // Verify that the course is open, escapes if the course is closed.
                         courseService.verifyCourseOpenByName(courseName);
-                        try{
-
-                        System.out.println("If you wish to attend " + courseName +
-                                "you must register again before the registration window closes\n" +
+                        System.out.println("If you wish to attend " + courseName + " you must register again before " +
+                                "the registration window closes\n" +
                                 "Are you sure?\n" +
                                 "1) Yes\n" +
                                 "2) No\n");
@@ -66,8 +62,7 @@ public class CourseWithdrawalScreen extends Screen {
                             switch (userVerification) {
                                 case "1":
                                     System.out.println("Withdrawing from " + courseName + "...");
-
-                                    //TODO remove the class from this student's account
+                                    userCoursesService.leaveCourse(courseName);
                                     System.out.println("Withdrawal successful!");
                                     break;
                                 case "2":
@@ -76,10 +71,6 @@ public class CourseWithdrawalScreen extends Screen {
                                 default:
                                     System.out.println("Invalid entry, canceling withdrawal process...");
                             }
-                        }catch (Exception e) {
-                            logger.error(e.getMessage());
-                            logger.debug("Registration process failed.");
-                        }
                     }catch (Exception e) {
                         logger.error(e.getMessage());
                         logger.debug("User not registered for any courses!");
@@ -93,6 +84,7 @@ public class CourseWithdrawalScreen extends Screen {
                     break;
                 case "4":
                     router.navigate("/student-home");
+                    break;
                 default:
                     System.out.println("Invalid entry, returning to Dashboard...");
             }

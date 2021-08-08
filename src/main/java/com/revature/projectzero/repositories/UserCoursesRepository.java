@@ -43,9 +43,6 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
         }
     }
 
-
-
-
     public void joinCourse(String course,String username){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
@@ -61,6 +58,68 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
             e.printStackTrace(); // TODO log this to a file
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
+    }
+
+    public void removeCourseFromUserList(String course, String username){
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase p0Db = mongoClient.getDatabase("p0");
+            MongoCollection<Document> userCoursesCollection = p0Db.getCollection("usercourses");
+            Document removeDoc = new Document("courses", course);
+            Document appendDoc = new Document("$pull",removeDoc);
+            Document searchDoc = new Document("username",username);
+            userCoursesCollection.updateOne(searchDoc,appendDoc);
+
+        }
+        catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
+    }
+
+    public void updateCourseNameInAllUserLists(String originalName, String newName){
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase p0Db = mongoClient.getDatabase("p0");
+            MongoCollection<Document> userCoursesCollection = p0Db.getCollection("usercourses");
+
+            //push the new name
+            Document updateDoc = new Document("courses", newName);
+            Document pushDoc = new Document("$push",updateDoc);
+            Document searchDoc = new Document("courses", originalName);
+            userCoursesCollection.updateMany(searchDoc, pushDoc);
+
+            //pull the old name
+            Document removalDoc = new Document("courses", originalName);
+            Document pullDoc = new Document("$pull",removalDoc);
+            userCoursesCollection.updateMany(searchDoc,pullDoc);
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
+    }
+
+    public void removeCourseFromAllUserLists(String course){
+
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase p0Db = mongoClient.getDatabase("p0");
+            MongoCollection<Document> userCoursesCollection = p0Db.getCollection("usercourses");
+
+            Document updateDoc = new Document("courses", course);
+            Document appendDoc = new Document("$pull",updateDoc);
+            Document searchDoc = new Document("courses", course);
+            userCoursesCollection.updateMany(searchDoc,appendDoc);
+
+        }
+        catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
+
     }
 
 

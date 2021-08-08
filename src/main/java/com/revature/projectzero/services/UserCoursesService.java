@@ -47,7 +47,7 @@ public class UserCoursesService {
         if (userCourses.isEmpty())
             throw new NoCoursesJoinedException("You have not registered for any courses!");
 
-
+        userCourseListRepo.removeCourseFromUserList(courseToLeave,un);
 
     }
 
@@ -62,6 +62,24 @@ public class UserCoursesService {
         throw new AlreadyRegisteredForCourseException("You have not joined a course by that name!");
 
     }
+
+    public void updateCourseNameInUserList(String originalName, String newName){
+
+        //TODO check if any users have registered for this course
+
+        userCourseListRepo.updateCourseNameInAllUserLists(originalName, newName);
+
+    }
+
+    public void expungeCourse(String courseName){
+
+        //TODO check if any users have registered for this course
+
+        userCourseListRepo.removeCourseFromAllUserLists(courseName);
+
+    }
+
+
 
     public List<String> getCourses(){
 

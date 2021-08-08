@@ -1,6 +1,4 @@
-package com.revature.Project_0.services;
-
-import org.junit.*;
+package com.revature.projectzero.services;
 
 public class UserServiceTestSuite {
 

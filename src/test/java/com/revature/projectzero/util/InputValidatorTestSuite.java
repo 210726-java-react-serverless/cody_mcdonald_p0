@@ -1,6 +1,5 @@
-package com.revature.Project_0.util;
+package com.revature.projectzero.util;
 
-import com.revature.projectzero.util.InputValidator;
 import com.revature.projectzero.util.exceptions.InvalidEntryException;
 import org.junit.*;
 

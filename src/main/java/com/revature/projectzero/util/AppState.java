@@ -5,7 +5,6 @@ import com.revature.projectzero.repositories.UserRepository;
 import com.revature.projectzero.services.CourseService;
 import com.revature.projectzero.services.UserCoursesService;
 import com.revature.projectzero.services.UserService;
-import com.revature.Project_0.screens.*;
 import com.revature.projectzero.screens.*;
 
 import java.io.BufferedReader;
@@ -44,10 +43,10 @@ public class AppState {
         router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new AddCourseScreen(consoleReader, router, courseService))
                 .addScreen(new CourseRegistrationScreen(consoleReader, router, courseService, userCoursesService))
-                .addScreen(new EditCourseScreen(consoleReader, router, courseService))
+                .addScreen(new EditCourseScreen(consoleReader, router, courseService, userCoursesService))
                 .addScreen(new FacultyDashboardScreen(consoleReader, router, userService))
                 .addScreen(new RegisteredCoursesScreen(consoleReader, router, userCoursesService))
-                .addScreen(new RemoveCourseScreen(consoleReader, router, courseService))
+                .addScreen(new RemoveCourseScreen(consoleReader, router, courseService, userCoursesService))
                 .addScreen(new StudentDashboardScreen(consoleReader, router, userService))
                 .addScreen(new LoginScreen(consoleReader, router, userService))
                 .addScreen(new ViewCoursesScreen(consoleReader, router, courseService))

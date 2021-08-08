@@ -2,6 +2,7 @@ package com.revature.projectzero.screens;
 
 import com.revature.projectzero.documents.Course;
 import com.revature.projectzero.services.CourseService;
+import com.revature.projectzero.services.UserCoursesService;
 import com.revature.projectzero.util.ScreenRouter;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,10 +13,13 @@ import java.io.IOException;
 public class EditCourseScreen extends Screen {
     private final Logger logger = LogManager.getLogger(EditCourseScreen.class);
     private final CourseService courseService;
+    private final UserCoursesService userCoursesService;
 
-    public EditCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {
+    public EditCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService,
+                            UserCoursesService userCoursesService) {
         super("EditCourseScreen", "/edit-course", consoleReader, router);
         this.courseService = courseService;
+        this.userCoursesService = userCoursesService;
     }
 
     @Override
@@ -39,7 +43,6 @@ public class EditCourseScreen extends Screen {
                 String markedCourse = consoleReader.readLine();
                 try{
                     Course editCourse = courseService.verifyCourse(markedCourse);
-                    //TODO: verify course exists
                     System.out.println("Which field would you like to edit?\n\n" +
                             "1) Course Name\n" +
                             "2) Course abbreviation\n" +
@@ -47,11 +50,11 @@ public class EditCourseScreen extends Screen {
                             "4) Open/Close Course to new students/withdrawal requests\n");
 
                     String userSelection2 = consoleReader.readLine();
-                    //TODO verify input, update database.
                     switch (userSelection2) {
                         case "1":
                             System.out.println("Enter the new course name.");
-                            String newCourseName = consoleReader.readLine();  //TODO update the course in the user course repo as well
+                            String newCourseName = consoleReader.readLine();
+                            userCoursesService.updateCourseNameInUserList(editCourse.getCourseName(), newCourseName);
                             courseService.updateCourseName(editCourse, newCourseName);
                             break;
                         case "2":

@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class CourseRegistrationScreen extends Screen {
 
-    private final Logger logger = LogManager.getLogger(EditCourseScreen.class);
+    private final Logger logger = LogManager.getLogger(CourseRegistrationScreen.class);
     private final CourseService courseService;
     private final UserCoursesService userCoursesService;
 
@@ -30,8 +30,8 @@ public class CourseRegistrationScreen extends Screen {
                 "1) Register for a course\n" +
                 "2) View Available Courses\n" +
                 "3) Cancel Course Registration\n" +
-                "4) Go back\n" +
-                "5) View Registered Courses\n" +
+                "4) View Registered Courses\n" +
+                "5) Go back\n" +
                 "6) Return to dashboard\n");
 
         String userSelection  = consoleReader.readLine();
@@ -57,21 +57,18 @@ public class CourseRegistrationScreen extends Screen {
                 router.navigate("/course-withdrawal");
                 break;
             case "4":
-                router.goBack();
+                router.navigate("/registered-courses");
                 break;
             case "5":
-                router.navigate("/student-home");
+                router.goBack();
                 break;
             case "6":
-                router.navigate("/registered-courses");
+                router.navigate("/student-home");
+                break;
             default:
                 System.out.println("Invalid entry.");
         }
 
-        //  TODO Print a list of available courses, will take shorthand and full course names
-        //      E.G. "CS101" or "Computer Science 101"
-        //      if a course is not listed/available but a student attempts to join,
-        //      inform the student that the registration window for the course has ended.
 
     }
 }
