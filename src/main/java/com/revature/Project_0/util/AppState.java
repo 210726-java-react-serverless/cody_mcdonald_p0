@@ -42,7 +42,7 @@ public class AppState {
         router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new AddCourseScreen(consoleReader, router, courseService))
                 .addScreen(new CourseRegistrationScreen(consoleReader, router, courseService))
-                .addScreen(new EditCourseScreen(consoleReader, router))
+                .addScreen(new EditCourseScreen(consoleReader, router, courseService))
                 .addScreen(new FacultyDashboardScreen(consoleReader, router, userService))
                 .addScreen(new RegisteredCoursesScreen(consoleReader, router, courseService))
                 .addScreen(new RemoveCourseScreen(consoleReader, router, courseService))

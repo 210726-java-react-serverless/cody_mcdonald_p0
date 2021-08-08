@@ -1,14 +1,19 @@
 package com.revature.Project_0.documents;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserCourses {
 
     private String id, username;
     private List<Course> courses = new ArrayList<>();
+
+    public UserCourses(){super();}
 
     public UserCourses(String username){ this.username = username; };
 

@@ -12,7 +12,7 @@ public class SystemAdminScreen extends Screen{
     }
 
     /*
-     * System admin account for unlocking the console, (if i implement that)
+     * System admin screen for unlocking the console, (if i implement that)
      *  a little side project for myself.
      *
      *

@@ -17,10 +17,9 @@ public class UserCoursesService {
     }
 
     public UserCourses initialize(UserCourses newUserCourseList){
-
-
         return usercourseListRepo.save(newUserCourseList);
-
     }
+
+
 
 }

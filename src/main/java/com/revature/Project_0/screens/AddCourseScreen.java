@@ -43,13 +43,13 @@ public class AddCourseScreen extends Screen{
         switch (userSelection)
         {
             case "1":
-                System.out.print("Course Name:");
+                System.out.print("Course Name: ");
                 courseName = consoleReader.readLine();
 
-                System.out.print("Course Abbreviation:");
+                System.out.print("Course Abbreviation: ");
                 courseAbv = consoleReader.readLine();
 
-                System.out.print("Course Description:");
+                System.out.print("Course Description: ");
                 courseDesc = consoleReader.readLine();
 
                 try{

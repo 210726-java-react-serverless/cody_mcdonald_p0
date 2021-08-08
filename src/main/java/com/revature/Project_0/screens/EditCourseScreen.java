@@ -1,5 +1,7 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.documents.Course;
+import com.revature.Project_0.services.CourseService;
 import com.revature.Project_0.util.ScreenRouter;
 
 import java.io.BufferedReader;
@@ -7,8 +9,11 @@ import java.io.IOException;
 
 public class EditCourseScreen extends Screen {
 
-    public EditCourseScreen(BufferedReader consoleReader, ScreenRouter router) {
+    private final CourseService courseService;
+
+    public EditCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {
         super("EditCourseScreen", "/edit-course", consoleReader, router);
+        this.courseService = courseService;
     }
 
     @Override
@@ -27,30 +32,46 @@ public class EditCourseScreen extends Screen {
         switch(userSelection)
         {
             case "1":
-                System.out.println("Enter the Name or abbreviation for the course\n" +
+                System.out.println("Enter the abbreviation for the course\n" +
                         "You would like to Edit:");
-                String markedForDeletion = consoleReader.readLine();
+                String markedCourse = consoleReader.readLine();
+
+                Course editCourse = courseService.verifyCourse(markedCourse);
+
+
                 //TODO: verify course exists
                 System.out.println("Which field would you like to edit?\n\n" +
                         "1) Course Name\n" +
                         "2) Course abbreviation\n" +
                         "3) Course description.\n" +
-                        "4) Close Course to new students/withdrawal requests\n");
+                        "4) Open/Close Course to new students/withdrawal requests\n");
 
                 String userSelection2 = consoleReader.readLine();
                 //TODO verify input, update database.
                 switch (userSelection2){
                     case "1":
                         System.out.println("Enter the new course name.");
+                        String newCourseName = consoleReader.readLine();
+                        courseService.updateCourseName(editCourse, newCourseName);
                         break;
                     case "2":
                         System.out.println("Enter the new course abbreviation.");
+                        String newCourseAbv = consoleReader.readLine();
+                        courseService.updateCourseAbv(editCourse, newCourseAbv);
                         break;
                     case "3":
                         System.out.println("Enter the new course description.");
+                        String newCourseDesc = consoleReader.readLine();
+                        courseService.updateCourseDesc(editCourse, newCourseDesc);
                         break;
                     case "4":
-                        System.out.println("Course closed.");
+                        if (editCourse.isOpen())
+                        {
+                            System.out.println("Course closed.");
+                        }else{
+                            System.out.println("Course opened.");
+                        }
+
                         break;
                     default:
                         System.out.println("Invalid entry, canceling edit process...");

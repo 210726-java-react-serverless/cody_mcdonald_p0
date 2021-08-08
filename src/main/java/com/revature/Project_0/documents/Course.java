@@ -1,8 +1,11 @@
 package com.revature.Project_0.documents;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Objects;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Course {
 
 
@@ -11,12 +14,18 @@ public class Course {
 
     public Course(){ super(); }
 
+    public Course(String cn, String cAbv){
+        this.courseName = cn;
+        this.courseAbbreviation = cAbv;
+    }
+
     public Course(String cn, String cAbv, String detail, boolean open) {
         this.courseName = cn;
         this.courseAbbreviation = cAbv;
         this.courseDetail = detail;
         this.isOpen = open;
     }
+
 
     public Course(String id, String cn, String cAbv, String detail){
         this.id = id;
@@ -68,11 +77,20 @@ public class Course {
 
     @Override
     public boolean equals(Object obj) {
-        return super.equals(obj);
+        if (this == obj ) return true;
+        else if (obj == null || getClass() != obj.getClass()) return false;
+        Course course = (Course) obj;
+        return Objects.equals(id, course.id) && Objects.equals(courseName, course.courseName) && Objects.equals(courseAbbreviation, course.courseAbbreviation) && Objects.equals(courseDetail, course.courseDetail) && Objects.equals(isOpen, course.isOpen);
     }
 
     @Override
     public String toString() {
-        return super.toString();
+        return "Course{" +
+                "id='" + id + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", courseAbbreviation='" + courseAbbreviation + '\'' +
+                ", courseDetail='" + courseDetail + '\'' +
+                ", isOpen='" + isOpen + '\'' +
+                '}';
     }
 }
