@@ -1,24 +1,33 @@
 package com.revature.Project_0.screens;
 
-import com.revature.Project_0.services.CourseService;
+import com.revature.Project_0.services.UserCoursesService;
 import com.revature.Project_0.util.ScreenRouter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 public class RegisteredCoursesScreen extends Screen {
 
-    private final CourseService courseService;
+    private final Logger logger = LogManager.getLogger(NewStudentScreen.class);
+    private final UserCoursesService userCoursesService;
 
-    public RegisteredCoursesScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {
+    public RegisteredCoursesScreen(BufferedReader consoleReader, ScreenRouter router, UserCoursesService userCoursesService) {
         super("RegisteredCoursesScreen", "/registered-courses", consoleReader, router);
-        this.courseService = courseService;
+        this.userCoursesService = userCoursesService;
     }
 
     @Override
     public void render() throws IOException {
-        System.out.println("You have registered for the following courses:");
-        //TODO pull registered courses from database
+        try {
+            System.out.println("You have registered for the following courses:");
+            System.out.println(userCoursesService.getCourses().toString());
+        }catch (Exception e) {
+            logger.error(e.getMessage());
+            logger.debug("User not registered!");
+            router.navigate("/welcome");
+        }
         System.out.println("Please select an option.\n" +
                 "1) Register for a course\n" +
                 "2) Withdraw from a course\n" +

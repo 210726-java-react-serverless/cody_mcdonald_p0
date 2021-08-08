@@ -1,19 +1,28 @@
 package com.revature.Project_0.screens;
 
+import com.revature.Project_0.documents.Course;
+import com.revature.Project_0.documents.UserCourses;
 import com.revature.Project_0.services.CourseService;
+import com.revature.Project_0.services.UserCoursesService;
 import com.revature.Project_0.services.UserService;
 import com.revature.Project_0.util.ScreenRouter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 public class CourseRegistrationScreen extends Screen {
 
+    private final Logger logger = LogManager.getLogger(EditCourseScreen.class);
     private final CourseService courseService;
+    private final UserCoursesService userCoursesService;
 
-    public CourseRegistrationScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {
+    public CourseRegistrationScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService,
+                                    UserCoursesService userCoursesService) {
         super("CourseRegistrationScreen", "/join-course", consoleReader, router);
         this.courseService = courseService;
+        this. userCoursesService = userCoursesService;
     }
 
     @Override
@@ -31,12 +40,17 @@ public class CourseRegistrationScreen extends Screen {
         switch (userSelection)
         {
             case "1":
-                System.out.print("Enter the name, abbreviation, or ID of the course you would like to join:");
-                String joiningCourse = consoleReader.readLine();
+                System.out.print("Enter the Abbreviation for the course you would like to join:");
+                String joining = consoleReader.readLine();
                 System.out.println("Applying for course...");
-                //TODO validate, update database
-
-                System.out.println("Course application accepted!");
+                try {
+                    Course joiningCourse = courseService.verifyCourseOpen(joining);
+                    userCoursesService.joinCourse(joiningCourse.getCourseName());
+                    System.out.println("Course application accepted!");
+                }catch (Exception e) {
+                    logger.error(e.getMessage());
+                    logger.debug("Course registration process canceled!");
+                }
                 break;
             case "2":
                 router.navigate("/courses");

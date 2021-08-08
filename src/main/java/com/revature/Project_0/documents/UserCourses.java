@@ -17,13 +17,14 @@ public class UserCourses {
 
     public UserCourses(String username){ this.username = username; };
 
-    public UserCourses(String id, String username){
-        this(username);
-        this.id = id;
+    public UserCourses(String username, String... regCourses){
+        this.username = username;
+        this.courses.addAll(Arrays.asList(regCourses));
+
     }
 
     public UserCourses addCourses(String... regCourses){
-        courses.addAll(Arrays.asList(regCourses));
+        this.courses.addAll(Arrays.asList(regCourses));
         return this;
     }
 

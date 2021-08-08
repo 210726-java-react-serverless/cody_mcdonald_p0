@@ -49,7 +49,7 @@ public class RemoveCourseScreen extends Screen {
                         case "1":
                             System.out.println("Removing class...");
                             courseService.removeCourse(editCourse);
-//                            userCoursesService.removeCourse(editCrouse());
+//                            userCoursesService.removeCourse(editCourse());
                             //TODO remove the class from users' course lists as well
                             break;
                         case "2":

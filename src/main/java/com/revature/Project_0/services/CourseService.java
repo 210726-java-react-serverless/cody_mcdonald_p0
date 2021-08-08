@@ -3,6 +3,7 @@ package com.revature.Project_0.services;
 import com.revature.Project_0.util.exceptions.InvalidEntryException;
 import com.revature.Project_0.documents.Course;
 import com.revature.Project_0.repositories.CourseRepository;
+import com.revature.Project_0.util.exceptions.NoSuchCourseException;
 import com.revature.Project_0.util.exceptions.ResourcePersistenceException;
 
 import java.util.List;
@@ -92,6 +93,24 @@ public class CourseService {
         }else if (courseRepo.findCourseByAbbreviation(abv) == null)
         {
             throw new ResourcePersistenceException("No course found with provided abbreviation!");
+        }
+
+        return courseRepo.findCourseByAbbreviation(abv);
+
+    }
+
+    public Course verifyCourseOpen(String abv){
+
+        if(abv==null||abv.trim().equals(""))
+        {
+            throw new InvalidEntryException("Invalid abbreviation provided");
+
+        }else if (courseRepo.findCourseByAbbreviation(abv) == null)
+        {
+            throw new NoSuchCourseException("No course found with provided abbreviation!");
+        }else if(!courseRepo.findCourseByAbbreviation(abv).isOpen())
+        {
+            throw new ResourcePersistenceException("The registration and withdrawal windows for this course have closed!");
         }
 
         return courseRepo.findCourseByAbbreviation(abv);

@@ -23,6 +23,7 @@ public class FacultyDashboardScreen extends Screen{
 
         AppUser currentUser = userService.getSession().getCurrentUser();
 
+
         System.out.println("Faculty Screen\n\n" +
                 "Welcome, " + currentUser.getFirstName()+ ".\n" +
                 "Please select an option.\n" +
