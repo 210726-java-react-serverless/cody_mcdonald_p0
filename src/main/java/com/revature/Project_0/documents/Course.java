@@ -62,6 +62,10 @@ public class Course {
 
     public void setId(String id) { this.id = id; }
 
+    public String getId() {
+        return id;
+    }
+
     public String getCourseAbbreviation() { return courseAbbreviation; }
 
     public void setCourseAbbreviation(String courseAbbreviation) { this.courseAbbreviation = courseAbbreviation; }

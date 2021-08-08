@@ -11,7 +11,7 @@ import java.util.Objects;
 public class UserCourses {
 
     private String id, username;
-    private List<Course> courses = new ArrayList<>();
+    private List<String> courses = new ArrayList<>();
 
     public UserCourses(){super();}
 
@@ -22,7 +22,7 @@ public class UserCourses {
         this.id = id;
     }
 
-    public UserCourses addCourses(Course... regCourses){
+    public UserCourses addCourses(String... regCourses){
         courses.addAll(Arrays.asList(regCourses));
         return this;
     }
@@ -45,11 +45,11 @@ public class UserCourses {
         this.username = username;
     }
 
-    public List<Course> getCourses() {
+    public List<String> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
+    public void setCourses(List<String> courses) {
         this.courses = courses;
     }
 

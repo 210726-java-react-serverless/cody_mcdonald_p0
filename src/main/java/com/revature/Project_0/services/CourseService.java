@@ -35,6 +35,12 @@ public class CourseService {
 
     }
 
+    public void removeCourse(Course course){
+
+        courseRepo.removeCourse(course);
+
+    }
+
     public void updateCourseName(Course editingCourse, String newName){
 
         if (newName==null||newName.trim().equals(""))
@@ -82,6 +88,10 @@ public class CourseService {
         if(abv==null||abv.trim().equals(""))
         {
             throw new InvalidEntryException("Invalid abbreviation provided");
+
+        }else if (courseRepo.findCourseByAbbreviation(abv) == null)
+        {
+            throw new ResourcePersistenceException("No course found with provided abbreviation!");
         }
 
         return courseRepo.findCourseByAbbreviation(abv);

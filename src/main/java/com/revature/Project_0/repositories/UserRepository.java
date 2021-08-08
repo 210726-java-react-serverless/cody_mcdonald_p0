@@ -35,7 +35,8 @@ public class UserRepository implements CrudRepository<AppUser>{
             AppUser authUser = mapper.readValue(authUserDoc.toJson(), AppUser.class);
             // Handling the ID set by mongodb
             authUser.setId(authUserDoc.get("_id").toString());
-            authUser.setFaculty((boolean)authUserDoc.get("isFaculty")); //i hate this
+            // Have to manually pull this since booleans are being cast to an object that isn't a Boolean
+            authUser.setFaculty((boolean)authUserDoc.get("isFaculty"));
             return authUser;
 
         } catch (JsonMappingException jme) {

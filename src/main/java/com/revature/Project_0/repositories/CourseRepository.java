@@ -197,6 +197,20 @@ public class CourseRepository implements CrudRepository<Course> {
         }
     }
 
+    public void removeCourse(Course course){
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase p0Db = mongoClient.getDatabase("p0");
+            MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
+            Document queryDoc = new Document("courseAbbreviation", course.getCourseAbbreviation());
+            coursesCollection.findOneAndDelete(queryDoc);
+        }catch (Exception e){
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
+
+    }
+
 
 
     @Override
