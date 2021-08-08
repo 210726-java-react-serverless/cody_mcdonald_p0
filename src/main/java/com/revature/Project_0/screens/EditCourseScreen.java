@@ -71,7 +71,7 @@ public class EditCourseScreen extends Screen {
                         }else{
                             System.out.println("Course opened.");
                         }
-
+                        courseService.toggleOpen(editCourse);
                         break;
                     default:
                         System.out.println("Invalid entry, canceling edit process...");

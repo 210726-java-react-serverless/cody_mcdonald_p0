@@ -123,20 +123,13 @@ public class CourseRepository implements CrudRepository<Course> {
 
     public void updatingCourseName(Course original,String newName){
         try {
-            // Get connection
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            // Access database
             MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("courses");
-            // Create new document with provided values to query database
-            Document queryDoc = new Document("courseName", original.getCourseName());
-            // Search the database for an instance of a collection with the matching values
-            Document courseDoc = usersCollection.find(queryDoc).first();
-
-
-
-
+            MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
+            Document updateDoc = new Document("courseName", newName);
+            Document appendDoc = new Document("$set",updateDoc);
+            Document searchDoc = new Document("courseName",original.getCourseName());
+            coursesCollection.updateOne(searchDoc,appendDoc);
         } catch (Exception e) {
             e.printStackTrace(); // TODO log this to a file
             throw new DataSourceException("An unexpected exception occurred.", e);
@@ -151,7 +144,7 @@ public class CourseRepository implements CrudRepository<Course> {
             MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
             Document updateDoc = new Document("courseAbbreviation", newAbv);
             Document appendDoc = new Document("$set",updateDoc);
-            Document searchDoc = new Document("courseAbbreviation",original.getCourseAbbreviation());
+            Document searchDoc = new Document("courseAbbreviation", original.getCourseAbbreviation());
             coursesCollection.updateOne(searchDoc,appendDoc);
 
         } catch (Exception e) {
@@ -163,32 +156,45 @@ public class CourseRepository implements CrudRepository<Course> {
 
     public void updatingCourseDesc(Course original, String newDesc){
         try {
-            // Get connection
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            // Access database
             MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("courses");
-            // Create new document with provided values to query database
-            Document queryDoc = new Document("courseAbbreviation", original.getCourseAbbreviation());
-            // Search the database for an instance of a collection with the matching values
-            Document courseDoc = usersCollection.find(queryDoc).first();
-            // Return null if the values were not propagated and therefore not found
-            // Create jackson object mapper
-            ObjectMapper mapper = new ObjectMapper();
-            // Converting the collection into a Json document and providing Jackson with the class
-            // Allows Jackson to read the values and map them to the corresponding object.
-            Course c = mapper.readValue(courseDoc.toJson(), Course.class);
+            MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
+            Document updateDoc = new Document("courseDetail", newDesc);
+            Document appendDoc = new Document("$set",updateDoc);
+            Document searchDoc = new Document("courseAbbreviation",original.getCourseAbbreviation());
+            coursesCollection.updateOne(searchDoc,appendDoc);
 
 
-        } catch (JsonMappingException jme) {
-            jme.printStackTrace(); // TODO log this to a file
-            throw new DataSourceException("An exception occurred while mapping the document.", jme);
         } catch (Exception e) {
             e.printStackTrace(); // TODO log this to a file
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
 
+    }
+
+    public void openClose(Course course){
+        try {
+            MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
+            MongoDatabase p0Db = mongoClient.getDatabase("p0");
+            MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
+            if(course.isOpen()) {
+                Document updateDoc = new Document("isOpen", false);
+                Document appendDoc = new Document("$set", updateDoc);
+                Document searchDoc = new Document("courseAbbreviation", course.getCourseAbbreviation());
+                coursesCollection.updateOne(searchDoc, appendDoc);
+            }else
+            {
+                Document updateDoc = new Document("isOpen", true);
+                Document appendDoc = new Document("$set", updateDoc);
+                Document searchDoc = new Document("courseAbbreviation", course.getCourseAbbreviation());
+                coursesCollection.updateOne(searchDoc, appendDoc);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace(); // TODO log this to a file
+            throw new DataSourceException("An unexpected exception occurred.", e);
+        }
     }
 
 

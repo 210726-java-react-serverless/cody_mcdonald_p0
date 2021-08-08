@@ -40,7 +40,7 @@ public class CourseService {
         if (newName==null||newName.trim().equals(""))
         {
             throw new InvalidEntryException("Course name cannot be blank!");
-        }else if (courseRepo.findCourseByName(editingCourse.getCourseName()) != null)
+        }else if (courseRepo.findCourseByName(newName) != null)
         {
             throw new ResourcePersistenceException("A course by that name already exists!");
         }
@@ -70,6 +70,11 @@ public class CourseService {
 
         courseRepo.updatingCourseDesc(editingCourse, newDesc);
 
+    }
+
+    public void toggleOpen(Course course){
+
+        courseRepo.openClose(course);
     }
 
     public Course verifyCourse(String abv){
