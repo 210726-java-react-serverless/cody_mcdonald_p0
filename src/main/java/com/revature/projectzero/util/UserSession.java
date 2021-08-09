@@ -10,11 +10,12 @@ public class UserSession {
         return currentUser != null;
     }
 
+    // Clear out user's data when they log off
     public void closeSession() {
         setCurrentUser(null);
     }
 
-    //Getters and setters
+    // Getters and setters
     public AppUser getCurrentUser() {
         return currentUser;
     }

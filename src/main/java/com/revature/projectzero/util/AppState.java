@@ -21,7 +21,6 @@ public class AppState {
     private static boolean appRunning;
     private final ScreenRouter router;
 
-
     public AppState() {
         appRunning = true;
         router = new ScreenRouter();
@@ -31,7 +30,6 @@ public class AppState {
         UserSession userSession = new UserSession();
         UserRepository userRepo = new UserRepository();
         UserService userService = new UserService(userRepo, userSession);
-
 
         CourseRepository courseRepo = new CourseRepository();
         CourseService courseService = new CourseService(courseRepo);
@@ -53,11 +51,6 @@ public class AppState {
                 .addScreen(new SystemAdminScreen(consoleReader, router))
                 .addScreen(new NewStudentScreen(consoleReader, router, userService, userCoursesService))
                 .addScreen(new CourseWithdrawalScreen(consoleReader, router, courseService, userCoursesService));
-
-        //TODO Kinda ugly and unnecessary to load all screens at once
-        //  maybe implement a factory that loads screens as needed later
-
-
     }
 
     public void startup() {
@@ -73,10 +66,8 @@ public class AppState {
         }
 
     }
-    /* Static methods can be accessed direction from an object's constructor
-     *  Making this a static method makes it easily accessible and reduces code duplication
-     *  --also making another appstate object for passing around would be rather dangerous.
-     */
+
+    // Static method for properly shutting down the app
     public static void closeApp() {
         System.out.println("Shutting down...");
         AppState.appRunning = false;

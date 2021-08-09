@@ -7,7 +7,6 @@ import com.revature.projectzero.util.exceptions.AlreadyRegisteredForCourseExcept
 import com.revature.projectzero.util.exceptions.NoCoursesJoinedException;
 import com.revature.projectzero.util.exceptions.NotRegisteredForCourseException;
 
-import javax.sound.midi.Soundbank;
 import java.util.List;
 
 public class UserCoursesService {

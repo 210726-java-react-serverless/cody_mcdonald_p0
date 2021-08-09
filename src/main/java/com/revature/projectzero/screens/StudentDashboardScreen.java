@@ -48,6 +48,7 @@ public class StudentDashboardScreen extends Screen {
             case "5":
                 System.out.println("Logging out...");
                 router.navigate("/welcome");
+                userService.getSession().closeSession();
                 router.deleteHistory();
                 System.out.println("History deleted!");
                 break;

@@ -7,6 +7,8 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
 import com.revature.projectzero.util.exceptions.DataSourceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -18,6 +20,8 @@ public class MongoClientFactory {
 
     private final MongoClient mongoClient;
     private static final MongoClientFactory mongoClientFactory = new MongoClientFactory();
+
+    private final Logger logger = LogManager.getLogger(MongoClientFactory.class);
 
     private MongoClientFactory() {
 
@@ -45,10 +49,10 @@ public class MongoClientFactory {
 
 
         }catch (FileNotFoundException fnfe) {
-            fnfe.printStackTrace(); // TODO log this to a file
+            logger.error("Unable to load database properties file.", fnfe);
             throw new DataSourceException("Unable to load database properties file.", fnfe);
         } catch(Exception e){
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
 

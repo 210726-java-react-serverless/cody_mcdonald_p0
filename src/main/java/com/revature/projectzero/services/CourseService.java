@@ -143,7 +143,7 @@ public class CourseService {
     }
 
     public List<Course> getCourses(){
-        return courseRepo.retrieveCourses();
+        return courseRepo.retrieveOpenCourses();
     }
 
     public boolean isCourseValid(Course course) {

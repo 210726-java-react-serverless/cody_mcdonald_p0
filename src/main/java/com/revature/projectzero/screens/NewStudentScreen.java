@@ -46,12 +46,14 @@ public class NewStudentScreen extends Screen {
         String password = consoleReader.readLine();
 
         try{
+            // Validate that the user followed the defined guidelines for each field.
             InputValidator.userEntryValidator(firstName, lastName, email, username, password);
             AppUser newUser = new AppUser(firstName, lastName, email, username, password, false);
             UserCourses newUserCourseList = new UserCourses(username);
             userService.register(newUser);
             courseListService.initialize(newUserCourseList);
             System.out.println("Student registered!");
+            logger.info("New student with the username "+ username +" registered and added to database.");
             router.navigate("/student-home");
         }catch (Exception e) {
             System.out.println("User not registered!\n");

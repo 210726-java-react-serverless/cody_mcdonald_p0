@@ -10,17 +10,26 @@ import com.revature.projectzero.documents.UserCourses;
 import com.revature.projectzero.util.MongoClientFactory;
 import com.revature.projectzero.util.exceptions.DataSourceException;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 
 import java.util.List;
 
 public class UserCoursesRepository implements CrudRepository<UserCourses> {
 
+    private static final String DATABASE = "p0";
+    private static final String COLLECTION = "usercourses";
+
+    private final Logger logger = LogManager.getLogger(UserCoursesRepository.class);
+
     public List<String> findRegisteredCoursesByUsername(String username){
         try {
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> usersCollection = p0Db.getCollection("usercourses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
+
             Document queryDoc = new Document("username", username);
             Document userCourseDoc = usersCollection.find(queryDoc).first();
             if (userCourseDoc == null) return null;
@@ -31,19 +40,20 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
             return userCourses.getCourses();
         }
         catch (JsonMappingException jme) {
-            jme.printStackTrace(); // TODO log this to a file
+            logger.error("An exception occurred while mapping the document.", jme);
             throw new DataSourceException("An exception occurred while mapping the document.", jme);
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
 
     public void joinCourse(String course,String username){
         try {
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> userCoursesCollection = p0Db.getCollection("usercourses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> userCoursesCollection = p0Db.getCollection(COLLECTION);
             Document updateDoc = new Document("courses", course);
             Document appendDoc = new Document("$push",updateDoc);
             Document searchDoc = new Document("username",username);
@@ -51,16 +61,18 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
 
         }
         catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
 
     public void removeCourseFromUserList(String course, String username){
         try {
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> userCoursesCollection = p0Db.getCollection("usercourses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> userCoursesCollection = p0Db.getCollection(COLLECTION);
+
             Document removeDoc = new Document("courses", course);
             Document appendDoc = new Document("$pull",removeDoc);
             Document searchDoc = new Document("username",username);
@@ -68,16 +80,17 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
 
         }
         catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
 
     public void updateCourseNameInAllUserLists(String originalName, String newName){
         try {
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> userCoursesCollection = p0Db.getCollection("usercourses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> userCoursesCollection = p0Db.getCollection(COLLECTION);
 
             //push the new name
             Document updateDoc = new Document("courses", newName);
@@ -93,7 +106,7 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
 
         }
         catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
@@ -101,9 +114,10 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
     public void removeCourseFromAllUserLists(String course){
 
         try {
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> userCoursesCollection = p0Db.getCollection("usercourses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> userCoursesCollection = p0Db.getCollection(COLLECTION);
 
             Document updateDoc = new Document("courses", course);
             Document appendDoc = new Document("$pull",updateDoc);
@@ -112,7 +126,7 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
 
         }
         catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
 
@@ -128,12 +142,11 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
     @Override
     public UserCourses save(UserCourses newCourseList) {
         try {
-            // Get connection
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            // Access database
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("usercourses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
+
             // Create new document with provided values
             Document newListDoc = new Document("username", newCourseList.getUsername())
                     .append("courses", newCourseList.getCourses());
@@ -145,7 +158,7 @@ public class UserCoursesRepository implements CrudRepository<UserCourses> {
             return newCourseList;
 
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }

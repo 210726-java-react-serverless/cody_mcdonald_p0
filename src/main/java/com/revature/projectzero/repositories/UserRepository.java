@@ -8,20 +8,25 @@ import com.mongodb.client.MongoDatabase;
 import com.revature.projectzero.util.exceptions.DataSourceException;
 import com.revature.projectzero.documents.AppUser;
 import com.revature.projectzero.util.MongoClientFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 
 public class UserRepository implements CrudRepository<AppUser>{
 
+    private static final String DATABASE = "p0";
+    private static final String COLLECTION = "users";
+
+    private final Logger logger = LogManager.getLogger(UserRepository.class);
 
     public AppUser findUserByCredentials(String username, String password) {
 
         try {
-            // Get connection
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            // Access database
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("users");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
+
             // Create new document with provided values to query database
             Document queryDoc = new Document("username", username).append("password", password);
             // Search the database for an instance of a collection with the matching values
@@ -40,10 +45,10 @@ public class UserRepository implements CrudRepository<AppUser>{
             return authUser;
 
         } catch (JsonMappingException jme) {
-            jme.printStackTrace(); // TODO log this to a file
+            logger.error("An exception occurred while mapping the document.", jme);
             throw new DataSourceException("An exception occurred while mapping the document.", jme);
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
 
@@ -51,12 +56,11 @@ public class UserRepository implements CrudRepository<AppUser>{
 
     public AppUser findUserByUsername(String username) {
         try {
-            // Get connection
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            // Access database
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("users");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
+
             // Create new document with provided values to query database
             Document queryDoc = new Document("username", username);
             // Search the database for an instance of a collection with the matching values
@@ -73,10 +77,10 @@ public class UserRepository implements CrudRepository<AppUser>{
             return authUser;
 
         }catch (JsonMappingException jme) {
-            jme.printStackTrace(); // TODO log this to a file
+            logger.error("An exception occurred while mapping the document.", jme);
             throw new DataSourceException("An exception occurred while mapping the document.", jme);
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
 
@@ -85,12 +89,11 @@ public class UserRepository implements CrudRepository<AppUser>{
 
     public AppUser findUserByEmail(String email) {
         try {
-            // Get connection
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            // Access database
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("users");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
+
             // Create new document with provided values to query database
             Document queryDoc = new Document("email", email);
             // Search the database for an instance of a collection with the matching values
@@ -108,10 +111,10 @@ public class UserRepository implements CrudRepository<AppUser>{
             return authUser;
 
         }catch (JsonMappingException jme) {
-            jme.printStackTrace(); // TODO log this to a file
+            logger.error("An exception occurred while mapping the document.", jme);
             throw new DataSourceException("An exception occurred while mapping the document.", jme);
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
     }
@@ -127,12 +130,11 @@ public class UserRepository implements CrudRepository<AppUser>{
 
 
         try {
-            // Get connection
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            // Access database
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("users");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
+
             // Create new user document with provided values
             Document newUserDoc = new Document("firstName", newUser.getFirstName())
                     .append("lastName", newUser.getLastName())
@@ -148,7 +150,7 @@ public class UserRepository implements CrudRepository<AppUser>{
             return newUser;
 
         } catch (Exception e) {
-            e.printStackTrace(); // TODO log this to a file
+            logger.error("An unexpected exception occurred.", e);
             throw new DataSourceException("An unexpected exception occurred.", e);
         }
 

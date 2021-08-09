@@ -46,6 +46,7 @@ public class FacultyDashboardScreen extends Screen{
                 break;
             case "4":
                 System.out.println("Logging out...");
+                userService.getSession().closeSession();
                 router.navigate("/welcome");
                 router.deleteHistory();
                 break;
