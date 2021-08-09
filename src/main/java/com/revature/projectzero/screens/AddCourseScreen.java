@@ -55,10 +55,10 @@ public class AddCourseScreen extends Screen{
                 try{
                     Course newCourse = new Course(courseName, courseAbv, courseDesc, true);
                     courseService.add(newCourse);
-                    System.out.println("Course registered!");
+                    System.out.println("Course added!");
                 }catch (Exception e) {
+                    logger.error("Failed to add course to database. Reason:");
                     logger.error(e.getMessage());
-                    logger.debug("Course not registered!");
                 }
                 break;
             case "2":

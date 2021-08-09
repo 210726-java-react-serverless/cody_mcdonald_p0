@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class CourseWithdrawalScreen extends Screen {
+
     private final Logger logger = LogManager.getLogger(CourseWithdrawalScreen.class);
     private final CourseService courseService;
     private final UserCoursesService userCoursesService;

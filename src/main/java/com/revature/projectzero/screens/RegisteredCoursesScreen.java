@@ -10,7 +10,7 @@ import java.io.IOException;
 
 public class RegisteredCoursesScreen extends Screen {
 
-    private final Logger logger = LogManager.getLogger(NewStudentScreen.class);
+    private final Logger logger = LogManager.getLogger(RegisteredCoursesScreen.class);
     private final UserCoursesService userCoursesService;
 
     public RegisteredCoursesScreen(BufferedReader consoleReader, ScreenRouter router, UserCoursesService userCoursesService) {

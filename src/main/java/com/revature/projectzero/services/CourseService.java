@@ -20,17 +20,16 @@ public class CourseService {
     public Course add(Course newCourse) {
 
         if (!isCourseValid(newCourse)) {
-            throw new InvalidEntryException("Invalid course data provided!");
-        }
-
-        if (courseRepo.findCourseByName(newCourse.getCourseName()) != null)
+            System.out.println("Invalid course data provided!");
+            throw new InvalidEntryException("User provided invalid course information.");
+        }else if (courseRepo.findCourseByName(newCourse.getCourseName()) != null)
         {
-            throw new ResourcePersistenceException("Provided course already exists!");
-        }
-
-        if (courseRepo.findCourseByAbbreviation(newCourse.getCourseAbbreviation()) != null)
+            System.out.println("Provided course already exists!");
+            throw new ResourcePersistenceException("User provided a course name that already exists.");
+        }else if (courseRepo.findCourseByAbbreviation(newCourse.getCourseAbbreviation()) != null)
         {
-            throw new ResourcePersistenceException("A course with the existing abbreviation already exists!");
+            System.out.println("A course with the existing abbreviation already exists!");
+            throw new ResourcePersistenceException("User provided an abbreviation that already exists.");
         }
 
         return courseRepo.save(newCourse);
@@ -47,10 +46,12 @@ public class CourseService {
 
         if (newName==null||newName.trim().equals(""))
         {
-            throw new InvalidEntryException("Course name cannot be blank!");
+            System.out.println("Course name cannot be blank!");
+            throw new InvalidEntryException("User provided a blank Course Name.");
         }else if (courseRepo.findCourseByName(newName) != null)
         {
-            throw new ResourcePersistenceException("A course by that name already exists!");
+            System.out.println("A course by that name already exists!");
+            throw new ResourcePersistenceException("User provided a course name that already exists.");
         }
 
         courseRepo.updatingCourseName(editingCourse, newName);
@@ -60,10 +61,12 @@ public class CourseService {
 
         if (newabv==null||newabv.trim().equals(""))
         {
-            throw new InvalidEntryException("Course abbreviation cannot be blank!");
+            System.out.println("Course abbreviation cannot be blank!");
+            throw new InvalidEntryException("User provided a blank course abbreviation.");
         }else if (courseRepo.findCourseByAbbreviation(newabv) != null)
         {
-            throw new ResourcePersistenceException("A course by that name already exists!");
+            System.out.println("A course with that abbreviation already exists!");
+            throw new ResourcePersistenceException("User provided an abbreviation that already exists.");
         }
 
         courseRepo.updatingCourseAbv(editingCourse, newabv);
@@ -73,7 +76,8 @@ public class CourseService {
 
         if (newDesc==null||newDesc.trim().equals(""))
         {
-            throw new InvalidEntryException("Course description cannot be blank!");
+            System.out.println("Course description cannot be blank!");
+            throw new InvalidEntryException("User provided a blank course description.");
         }
 
         courseRepo.updatingCourseDesc(editingCourse, newDesc);
@@ -126,10 +130,12 @@ public class CourseService {
 
         }else if (courseRepo.findCourseByName(courseName) == null)
         {
+            System.out.println("No course found with provided name!");
             throw new NoSuchCourseException("No course found with provided name!");
         }else if(!courseRepo.findCourseByName(courseName).isOpen())
         {
-            throw new CourseNotOpenException("The registration and withdrawal windows for this course have closed!");
+            System.out.println("The registration and withdrawal windows for this course have closed!");
+            throw new CourseNotOpenException("User attempted to join or withdraw from a closed course.");
         }
 
         return courseRepo.findCourseByAbbreviation(courseName);
@@ -143,7 +149,8 @@ public class CourseService {
     public boolean isCourseValid(Course course) {
         if (course == null) return false;
         if (course.getCourseName() == null || course.getCourseName().trim().equals("")) return false;
-        return course.getCourseAbbreviation() != null && !course.getCourseAbbreviation().trim().equals("");
+        if (course.getCourseAbbreviation() == null || course.getCourseAbbreviation().trim().equals("")) return false;
+        else return course.getCourseDetail() != null && !course.getCourseDetail().trim().equals("");
     }
 
 }

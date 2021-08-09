@@ -12,7 +12,7 @@ public class SystemAdminScreen extends Screen{
     }
 
     /*
-     * System admin screen for unlocking the console, (if i implement that)
+     * System admin screen for unlocking the console and adding Faculty accounts, (if i implement that)
      *  a little side project for myself.
      *
      *
@@ -21,15 +21,11 @@ public class SystemAdminScreen extends Screen{
     @Override
     public void render() throws IOException {
 
-        System.out.println("Awaken, my master.\n");
-        System.out.println("1) Add new Faculty account.\n" +
-                "2) Add new Student account\n" +
-                "3) Add a new Course\n" +
-                "4) Remove a Faculty account\n" +
-                "5) Remove a Student account\n" +
-                "6) Remove a Course\n" +
-                        "7) Edit a user's account\n" +
-                        "8) Unlock the console\n");
+        System.out.println("Awaken, my master.\n\n" +
+                "1) Unlock the console\n" +
+                "2) Add new Faculty account\n" +
+                "3) Log out.");
+
         System.out.println("Nothing to do for now...");
 
         router.navigate("/welcome");

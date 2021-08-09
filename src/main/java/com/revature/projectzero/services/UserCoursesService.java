@@ -5,7 +5,9 @@ import com.revature.projectzero.repositories.UserCoursesRepository;
 import com.revature.projectzero.util.UserSession;
 import com.revature.projectzero.util.exceptions.AlreadyRegisteredForCourseException;
 import com.revature.projectzero.util.exceptions.NoCoursesJoinedException;
+import com.revature.projectzero.util.exceptions.NotRegisteredForCourseException;
 
+import javax.sound.midi.Soundbank;
 import java.util.List;
 
 public class UserCoursesService {
@@ -59,7 +61,8 @@ public class UserCoursesService {
                 return course;
         }
 
-        throw new AlreadyRegisteredForCourseException("You have not joined a course by that name!");
+        System.out.println("You have not registered for a course by this name.");
+        throw new NotRegisteredForCourseException("User attempted to withdraw for a course they were not enrolled in.");
 
     }
 
@@ -85,7 +88,8 @@ public class UserCoursesService {
 
         if(userCourseListRepo.findRegisteredCoursesByUsername(
                 session.getCurrentUser().getUsername()).isEmpty()){
-            throw new NoCoursesJoinedException("You have not registered for any courses!");
+            System.out.println("You have not registered for any courses!");
+            throw new NoCoursesJoinedException("User has not registered for any courses.");
         }
 
         return userCourseListRepo.findRegisteredCoursesByUsername(session.getCurrentUser().getUsername());
