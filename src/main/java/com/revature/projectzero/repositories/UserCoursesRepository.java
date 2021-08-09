@@ -16,10 +16,6 @@ import java.util.List;
 
 public class UserCoursesRepository implements CrudRepository<UserCourses> {
 
-    //TODO finish these to prevent duplicates
-    public UserCourses getUsersCourses(String username,String courseName) { return null;
-    }
-
     public List<String> findRegisteredCoursesByUsername(String username){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();

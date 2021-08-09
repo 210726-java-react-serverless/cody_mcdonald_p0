@@ -3,17 +3,18 @@ package com.revature.projectzero.screens;
 import com.revature.projectzero.documents.Course;
 import com.revature.projectzero.services.CourseService;
 import com.revature.projectzero.util.ScreenRouter;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+
 
 
 public class AddCourseScreen extends Screen{
 
-    private final Logger logger = LogManager.getLogger(NewStudentScreen.class);
+    private final Logger logger = LogManager.getLogger(AddCourseScreen.class);
     private final CourseService courseService;
 
     public AddCourseScreen(BufferedReader consoleReader, ScreenRouter router, CourseService courseService) {
@@ -24,10 +25,9 @@ public class AddCourseScreen extends Screen{
     @Override
     public void render() throws IOException {
 
-        String courseName, courseAbv,courseDesc;
-
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM.dd.yyyy");
+        String courseName;
+        String courseAbv;
+        String courseDesc;
 
         System.out.println("New Course Screen:\n");
 
@@ -53,18 +53,13 @@ public class AddCourseScreen extends Screen{
                 courseDesc = consoleReader.readLine();
 
                 try{
-                    //TODO course entry validation
                     Course newCourse = new Course(courseName, courseAbv, courseDesc, true);
                     courseService.add(newCourse);
                     System.out.println("Course registered!");
-                    router.navigate("/new-course");
                 }catch (Exception e) {
                     logger.error(e.getMessage());
                     logger.debug("Course not registered!");
-                    router.navigate("/new-course");
                 }
-
-                System.out.println("Adding the course to the database...");
                 break;
             case "2":
                 router.navigate("/edit-course");

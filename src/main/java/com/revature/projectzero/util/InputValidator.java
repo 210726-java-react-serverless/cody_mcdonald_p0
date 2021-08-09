@@ -3,7 +3,7 @@ package com.revature.projectzero.util;
 /*
  * Class for validating user input to check for:
  *  Empty values,
- *  Password security, (Minimum of 8 characters TODO: One Uppercase, one symbol, and one number.)
+ *  Password security, (Minimum of 8 characters)
  *  Username length, (Greater than 4 characters)
  *  invalid username characters, (no symbols in username)
  *
@@ -23,8 +23,10 @@ public class InputValidator {
     // Pattern for simple email verification.
     static Pattern emailPattern = Pattern.compile("^(.+)@(.+)$");
 
+    // Not meant to be instantiated
+    private InputValidator(){}
 
-    // Validator for user registration, validates username, password, and
+    // Validator for student registration
     public static void userEntryValidator(String fn, String ln,String em,String un,String pw){
 
         if(un.trim().equals("")||pw.trim().equals("")||fn.trim().equals("")||ln.trim().equals("")||
@@ -48,6 +50,4 @@ public class InputValidator {
 
 
     }
-
-
 }

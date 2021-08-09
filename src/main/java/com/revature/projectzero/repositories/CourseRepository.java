@@ -9,6 +9,8 @@ import com.mongodb.client.MongoDatabase;
 import com.revature.projectzero.documents.Course;
 import com.revature.projectzero.util.MongoClientFactory;
 import com.revature.projectzero.util.exceptions.DataSourceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 
 import java.util.ArrayList;
@@ -16,15 +18,20 @@ import java.util.List;
 
 public class CourseRepository implements CrudRepository<Course> {
 
-    //TODO finish these to prevent duplicate courses
+    private static final String DATABASE = "p0";
+    private static final String COLLECTION = "courses";
+
+    private final Logger logger = LogManager.getLogger(CourseRepository.class);
+
+
     public Course findCourseByName(String courseName) {
         try {
             // Get connection
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
             // Access database
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
             // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("courses");
+            MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
             // Create new document with provided values to query database
             Document queryDoc = new Document("courseName", courseName);
             // Search the database for an instance of a collection with the matching values
@@ -35,11 +42,12 @@ public class CourseRepository implements CrudRepository<Course> {
             ObjectMapper mapper = new ObjectMapper();
             // Converting the collection into a Json document and providing Jackson with the class
             // Allows Jackson to read the values and map them to the corresponding object.
-            Course c = mapper.readValue(courseDoc.toJson(), Course.class);
+            Course course = mapper.readValue(courseDoc.toJson(), Course.class);
             // Handling the ID set by mongodb
-            c.setId(courseDoc.get("_id").toString());
-            c.setOpen((boolean)courseDoc.get("isOpen"));
-            return c;
+            course.setId(courseDoc.get("_id").toString());
+            course.setOpen((boolean)courseDoc.get("isOpen"));
+            mongoClient.close();
+            return course;
 
         } catch (JsonMappingException jme) {
             jme.printStackTrace(); // TODO log this to a file
@@ -55,24 +63,29 @@ public class CourseRepository implements CrudRepository<Course> {
             // Get connection
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
             // Access database
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
             // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("courses");
+            MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
             // Create new document with provided values to query database
             Document queryDoc = new Document("courseAbbreviation", courseAbv);
             // Search the database for an instance of a collection with the matching values
             Document courseDoc = usersCollection.find(queryDoc).first();
             // Return null if the values were not propagated and therefore not found
-            if (courseDoc == null) return null;
+            if (courseDoc == null)
+            {
+                mongoClient.close();
+                return null;
+            }
             // Create jackson object mapper
             ObjectMapper mapper = new ObjectMapper();
             // Converting the collection into a Json document and providing Jackson with the class
             // Allows Jackson to read the values and map them to the corresponding object.
-            Course c = mapper.readValue(courseDoc.toJson(), Course.class);
+            Course course = mapper.readValue(courseDoc.toJson(), Course.class);
             // Handling the ID set by mongodb
-            c.setId(courseDoc.get("_id").toString());
-            c.setOpen((boolean)courseDoc.get("isOpen"));
-            return c;
+            course.setId(courseDoc.get("_id").toString());
+            course.setOpen((boolean)courseDoc.get("isOpen"));
+            mongoClient.close();
+            return course;
 
         } catch (JsonMappingException jme) {
             jme.printStackTrace(); // TODO log this to a file
@@ -86,22 +99,21 @@ public class CourseRepository implements CrudRepository<Course> {
 
     public List<Course> retrieveCourses() {
         try {
+            // ArrayList to hold courses
             List<Course> courses = new ArrayList<>();
             // Get connection
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
             // Access database
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
             // Access collection
-            MongoCollection<Document> usersCollection = p0Db.getCollection("courses");
+            MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
             // Create new document with provided values to query database
             Document queryDoc = new Document("isOpen", true);
             // Retrieve an iterable document of all collections
             FindIterable<Document> openCoursesDoc = usersCollection.find(queryDoc);
-            // Return null if the values were not propagated and therefore not found
-            if (openCoursesDoc == null) return null;
             // Create jackson object mapper
             ObjectMapper mapper = new ObjectMapper();
-            Course openCourse = new Course();
+            Course openCourse;
 
             for(Document a: openCoursesDoc){
                 openCourse = mapper.readValue(a.toJson(), Course.class);
@@ -113,6 +125,7 @@ public class CourseRepository implements CrudRepository<Course> {
 
         } catch (JsonMappingException jme) {
             jme.printStackTrace(); // TODO log this to a file
+            logger.error("An exception occurred while mapping the document.", jme);
             throw new DataSourceException("An exception occurred while mapping the document.", jme);
         } catch (Exception e) {
             e.printStackTrace(); // TODO log this to a file
@@ -123,8 +136,8 @@ public class CourseRepository implements CrudRepository<Course> {
     public void updatingCourseName(Course original,String newName){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> coursesCollection = p0Db.getCollection(COLLECTION);
             Document updateDoc = new Document("courseName", newName);
             Document appendDoc = new Document("$set",updateDoc);
             Document searchDoc = new Document("courseName",original.getCourseName());
@@ -139,8 +152,8 @@ public class CourseRepository implements CrudRepository<Course> {
     public void updatingCourseAbv(Course original, String newAbv){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> coursesCollection = p0Db.getCollection(COLLECTION);
             Document updateDoc = new Document("courseAbbreviation", newAbv);
             Document appendDoc = new Document("$set",updateDoc);
             Document searchDoc = new Document("courseAbbreviation", original.getCourseAbbreviation());
@@ -156,8 +169,8 @@ public class CourseRepository implements CrudRepository<Course> {
     public void updatingCourseDesc(Course original, String newDesc){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> coursesCollection = p0Db.getCollection(COLLECTION);
             Document updateDoc = new Document("courseDetail", newDesc);
             Document appendDoc = new Document("$set",updateDoc);
             Document searchDoc = new Document("courseAbbreviation",original.getCourseAbbreviation());
@@ -174,8 +187,8 @@ public class CourseRepository implements CrudRepository<Course> {
     public void openClose(Course course){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> coursesCollection = p0Db.getCollection(COLLECTION);
             if(course.isOpen()) {
                 Document updateDoc = new Document("isOpen", false);
                 Document appendDoc = new Document("$set", updateDoc);
@@ -199,8 +212,8 @@ public class CourseRepository implements CrudRepository<Course> {
     public void removeCourse(Course course){
         try {
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
-            MongoCollection<Document> coursesCollection = p0Db.getCollection("courses");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
+            MongoCollection<Document> coursesCollection = p0Db.getCollection(COLLECTION);
             Document queryDoc = new Document("courseAbbreviation", course.getCourseAbbreviation());
             coursesCollection.findOneAndDelete(queryDoc);
         }catch (Exception e){
@@ -224,9 +237,9 @@ public class CourseRepository implements CrudRepository<Course> {
             // Get connection
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
             // Access database
-            MongoDatabase p0Db = mongoClient.getDatabase("p0");
+            MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
             // Access collection
-            MongoCollection<Document> courseCollection = p0Db.getCollection("courses");
+            MongoCollection<Document> courseCollection = p0Db.getCollection(COLLECTION);
             // Create new user document with provided values
             Document newCourserDoc = new Document("courseName", newCourse.getCourseName())
                     .append("courseAbbreviation", newCourse.getCourseAbbreviation())

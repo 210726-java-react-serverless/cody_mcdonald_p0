@@ -8,8 +8,10 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Course {
 
-
-    private String id, courseName, courseAbbreviation, courseDetail;
+    private String id;
+    private String courseName;
+    private String courseAbbreviation;
+    private String courseDetail;
     private boolean isOpen;
 
     public Course(){ super(); }

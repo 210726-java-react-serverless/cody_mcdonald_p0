@@ -53,7 +53,6 @@ public class AppState {
                 .addScreen(new SystemAdminScreen(consoleReader, router))
                 .addScreen(new NewStudentScreen(consoleReader, router, userService, userCoursesService))
                 .addScreen(new CourseWithdrawalScreen(consoleReader, router, courseService, userCoursesService));
-        ;
 
         //TODO Kinda ugly and unnecessary to load all screens at once
         //  maybe implement a factory that loads screens as needed later

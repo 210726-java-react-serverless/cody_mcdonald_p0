@@ -8,7 +8,12 @@ import java.util.Objects;
 public class AppUser {
 
 
-    private String id, firstName, lastName, email, username, password;
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String username;
+    private String password;
     private boolean isFaculty; //boolean to determine if the user is faculty or student
 
     //Jackson requires a no-args constructor

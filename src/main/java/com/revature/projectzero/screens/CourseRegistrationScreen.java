@@ -38,7 +38,7 @@ public class CourseRegistrationScreen extends Screen {
         switch (userSelection)
         {
             case "1":
-                System.out.print("Enter the Abbreviation for the course you would like to join:");
+                System.out.print("Enter the Abbreviation for the course you would like to join: ");
                 String joining = consoleReader.readLine();
                 System.out.println("Applying for course...");
                 try {

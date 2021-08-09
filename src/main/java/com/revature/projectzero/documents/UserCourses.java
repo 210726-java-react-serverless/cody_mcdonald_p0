@@ -10,12 +10,13 @@ import java.util.Objects;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserCourses {
 
-    private String id, username;
+    private String id;
+    private String username;
     private List<String> courses = new ArrayList<>();
 
     public UserCourses(){super();}
 
-    public UserCourses(String username){ this.username = username; };
+    public UserCourses(String username){ this.username = username; }
 
     public UserCourses(String username, String... regCourses){
         this.username = username;

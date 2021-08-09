@@ -10,9 +10,9 @@ import java.util.Set;
 public class ScreenRouter {
     private Screen currentScreen;
     //HashSet of screens for storing activated screens
-    private Set<Screen> screens = new HashSet<>();
+    private final Set<Screen> screens = new HashSet<>();
     //ArrayDeque to be used as a stack for "back" or "cancel" functionality.
-    private ArrayDeque<Screen> previousScreens;
+    private final ArrayDeque<Screen> previousScreens;
 
     public ScreenRouter(){ previousScreens = new ArrayDeque<Screen>();} //instantiate history in default cons
 
