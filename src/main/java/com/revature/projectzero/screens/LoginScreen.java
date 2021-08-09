@@ -4,12 +4,15 @@ import com.revature.projectzero.documents.AppUser;
 import com.revature.projectzero.util.exceptions.AuthenticationException;
 import com.revature.projectzero.services.UserService;
 import com.revature.projectzero.util.ScreenRouter;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
 public class LoginScreen extends Screen {
 
+    private final Logger logger = LogManager.getLogger(LoginScreen.class);
     private final UserService userService;
 
     public LoginScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService) {
@@ -19,7 +22,8 @@ public class LoginScreen extends Screen {
 
     @Override
     public void render() throws IOException {
-        String un,pw;
+        String un;
+        String pw;
 
         System.out.println("\nUser Login Screen\n" +
                 "Please enter your username:");
@@ -44,6 +48,8 @@ public class LoginScreen extends Screen {
         } catch (AuthenticationException ae) {
             System.out.println("No user found with provided credentials!");
             System.out.println("Navigating back to welcome screen...");
+            logger.error(ae.getMessage());
+            logger.debug("User login failed!");
             router.navigate("/welcome");
         }
     }

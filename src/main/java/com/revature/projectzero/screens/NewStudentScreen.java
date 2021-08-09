@@ -19,10 +19,11 @@ public class NewStudentScreen extends Screen {
     private final UserService userService;
     private final UserCoursesService courseListService;
 
-    public NewStudentScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService, UserCoursesService cls) {
+    public NewStudentScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService,
+                            UserCoursesService userCoursesService) {
         super("NewStudentScreen", "/new-student", consoleReader, router);
         this.userService = userService;
-        this.courseListService = cls;
+        this.courseListService = userCoursesService;
     }
 
     @Override
@@ -53,8 +54,9 @@ public class NewStudentScreen extends Screen {
             System.out.println("Student registered!");
             router.navigate("/student-home");
         }catch (Exception e) {
+            System.out.println("User not registered!\n");
+            logger.error("User registration failed. Reason:");
             logger.error(e.getMessage());
-            logger.debug("User not registered!");
             router.navigate("/welcome");
         }
 

@@ -25,8 +25,8 @@ public class RegisteredCoursesScreen extends Screen {
             System.out.println(userCoursesService.getCourses().toString());
         }catch (Exception e) {
             logger.error(e.getMessage());
-            logger.debug("User not registered for any courses!");
-            router.navigate("/welcome");
+            logger.debug("User has not registered for any courses!");
+            router.goBack();
         }
         System.out.println("Please select an option.\n" +
                 "1) Register for a course\n" +
@@ -53,10 +53,6 @@ public class RegisteredCoursesScreen extends Screen {
             default:
                 System.out.println("Invalid entry. Please try again.");
         }
-
-        //TODO check if students have > 0 registered courses
-        // if they do, then print them to the command line
-        // else, print "You are not registered for any courses!"
 
     }
 }
