@@ -46,7 +46,6 @@ public class CourseRepository implements CrudRepository<Course> {
             // Handling the ID set by mongodb
             course.setId(courseDoc.get("_id").toString());
             course.setOpen((boolean)courseDoc.get("isOpen"));
-            mongoClient.close();
             return course;
 
         } catch (JsonMappingException jme) {
@@ -72,7 +71,6 @@ public class CourseRepository implements CrudRepository<Course> {
             // Return null if the values were not propagated and therefore not found
             if (courseDoc == null)
             {
-                mongoClient.close();
                 return null;
             }
             // Create jackson object mapper
@@ -83,7 +81,6 @@ public class CourseRepository implements CrudRepository<Course> {
             // Handling the ID set by mongodb
             course.setId(courseDoc.get("_id").toString());
             course.setOpen((boolean)courseDoc.get("isOpen"));
-            mongoClient.close();
             return course;
 
         } catch (JsonMappingException jme) {

@@ -20,7 +20,7 @@ public class CourseService {
     public Course add(Course newCourse) {
 
         if (!isCourseValid(newCourse)) {
-            System.out.println("Invalid course data provided!");
+            System.out.println("Invalid course data provided, course not saved.");
             throw new InvalidEntryException("User provided invalid course information.");
         }else if (courseRepo.findCourseByName(newCourse.getCourseName()) != null)
         {
@@ -93,11 +93,13 @@ public class CourseService {
 
         if(abv==null||abv.trim().equals(""))
         {
-            throw new InvalidEntryException("Invalid abbreviation provided");
+            System.out.println("Abbreviation cannot be blank!");
+            throw new InvalidEntryException("Invalid abbreviation provided.");
 
         }else if (courseRepo.findCourseByAbbreviation(abv) == null)
         {
-            throw new ResourcePersistenceException("No course found with provided abbreviation!");
+            System.out.println("No course found with provided abbreviation!");
+            throw new ResourcePersistenceException("No course found with provided abbreviation.");
         }
 
         return courseRepo.findCourseByAbbreviation(abv);
@@ -108,13 +110,16 @@ public class CourseService {
 
         if(abv==null||abv.trim().equals(""))
         {
-            throw new InvalidEntryException("Invalid abbreviation provided");
+            System.out.println("Invalid entry!");
+            throw new InvalidEntryException("Blank entry.");
 
         }else if (courseRepo.findCourseByAbbreviation(abv) == null)
         {
-            throw new NoSuchCourseException("No course found with provided abbreviation!");
+            System.out.println("No course found with provided abbreviation!");
+            throw new NoSuchCourseException("Invalid course abbreviation provided.");
         }else if(!courseRepo.findCourseByAbbreviation(abv).isOpen())
         {
+            System.out.println("The registration and withdrawal windows for this course have closed!");
             throw new ResourcePersistenceException("The registration and withdrawal windows for this course have closed!");
         }
 
@@ -147,10 +152,17 @@ public class CourseService {
     }
 
     public boolean isCourseValid(Course course) {
-        if (course == null) return false;
-        if (course.getCourseName() == null || course.getCourseName().trim().equals("")) return false;
-        if (course.getCourseAbbreviation() == null || course.getCourseAbbreviation().trim().equals("")) return false;
-        else return course.getCourseDetail() != null && !course.getCourseDetail().trim().equals("");
+        if ((course == null) || (course.getCourseName() == null) || course.getCourseName().trim().equals("") ||
+                (course.getCourseAbbreviation() == null) || course.getCourseAbbreviation().trim().equals("") ||
+                (course.getCourseDetail() == null) || course.getCourseDetail().trim().equals("")) {
+            System.out.println("Fields cannot be empty!");
+            return false;
+        }
+        if ((course.getCourseName().length()) <= (course.getCourseAbbreviation().length())){
+            System.out.println("Please make the course abbreviation smaller than the course name.");
+            return false;
+        }
+        else return true;
     }
 
 }

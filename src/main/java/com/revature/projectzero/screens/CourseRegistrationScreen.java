@@ -20,7 +20,7 @@ public class CourseRegistrationScreen extends Screen {
                                     UserCoursesService userCoursesService) {
         super("CourseRegistrationScreen", "/join-course", consoleReader, router);
         this.courseService = courseService;
-        this. userCoursesService = userCoursesService;
+        this.userCoursesService = userCoursesService;
     }
 
     @Override
@@ -46,8 +46,8 @@ public class CourseRegistrationScreen extends Screen {
                     userCoursesService.joinCourse(joiningCourse.getCourseName());
                     System.out.println("Course application accepted!");
                 }catch (Exception e) {
-                    logger.error(e.getMessage());
-                    logger.debug("Course registration process canceled!");
+                    logger.error("User failed to join course. Reason:",e);
+                    System.out.println("Course registration process canceled.");
                 }
                 break;
             case "2":

@@ -80,8 +80,8 @@ public class EditCourseScreen extends Screen {
                     }
 
                 }catch (Exception e) {
-                    logger.error(e.getMessage());
-                    logger.debug("Course not modified!");
+                    logger.error("Course modification failed. Reason:",e);
+                    System.out.println("Course modification process cancelled");
                 }
                 break;
             case "2":

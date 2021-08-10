@@ -24,9 +24,7 @@ public class RegisteredCoursesScreen extends Screen {
             System.out.println("You have registered for the following courses:");
             System.out.println(userCoursesService.getCourses().toString());
         }catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.debug("User has not registered for any courses!");
-            router.goBack();
+            logger.error("Failed to retrieve user courses. Reason:",e);
         }
         System.out.println("Please select an option.\n" +
                 "1) Register for a course\n" +

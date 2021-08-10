@@ -24,18 +24,19 @@ public class UserCoursesService {
         userCourseListRepo.save(newUserCourseList);
     }
 
-    public void joinCourse(String courseToRemove){
+    public void joinCourse(String courseToJoin){
 
         // Grabbing values to iterate over here instead of on one line so it looks nicer and is easier to follow
         String un = session.getCurrentUser().getUsername();
         List<String> userCourses = userCourseListRepo.findRegisteredCoursesByUsername(un);
-
-        for (String course:userCourses) {
-            if(courseToRemove.equals(course))
-                throw new AlreadyRegisteredForCourseException("You have already registered for this course!");
+        if(userCourses!=null) {
+            for (String course : userCourses) {
+                if (courseToJoin.equals(course))
+                    throw new AlreadyRegisteredForCourseException("You have already registered for this course!");
+            }
         }
 
-        userCourseListRepo.joinCourse(courseToRemove,session.getCurrentUser().getUsername());
+        userCourseListRepo.joinCourse(courseToJoin,session.getCurrentUser().getUsername());
     }
 
 

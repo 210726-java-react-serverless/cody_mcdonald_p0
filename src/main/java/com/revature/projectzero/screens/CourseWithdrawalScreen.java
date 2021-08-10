@@ -73,8 +73,8 @@ public class CourseWithdrawalScreen extends Screen {
                                     System.out.println("Invalid entry, canceling withdrawal process...");
                             }
                     }catch (Exception e) {
-                        logger.error(e.getMessage());
-                        logger.debug("User not registered for any courses!");
+                        logger.error("Course registration failed. Reason:", e);
+                        System.out.println("Course registration process canceled!");
                     }
                     break;
                 case "2":

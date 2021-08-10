@@ -4,17 +4,22 @@ import com.revature.projectzero.util.exceptions.ScreenNotFoundException;
 import com.revature.projectzero.screens.Screen;
 
 import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 
 public class ScreenRouter {
+
     private Screen currentScreen;
-    //HashSet of screens for storing activated screens
+
+    // HashSet of screens for storing activated screens
     private final Set<Screen> screens = new HashSet<>();
-    //ArrayDeque to be used as a stack for "back" or "cancel" functionality.
+
+    // ArrayDeque to be used as a stack for "back" or "cancel" functionality.
     private final ArrayDeque<Screen> previousScreens;
 
-    public ScreenRouter(){ previousScreens = new ArrayDeque<Screen>();} //instantiate history in default cons
+    // Instantiates history in default cons
+    public ScreenRouter(){ previousScreens = new ArrayDeque<>();}
 
     //Method to add a screen to the hashset.
     public ScreenRouter addScreen(Screen screen) {
@@ -36,7 +41,7 @@ public class ScreenRouter {
     }
 
     public void goBack() throws ScreenNotFoundException{
-        if(previousScreens.size() == 0){ throw new ScreenNotFoundException();}
+        if(previousScreens.isEmpty()){ throw new ScreenNotFoundException();}
         currentScreen = previousScreens.pop();
     }
 
@@ -49,5 +54,5 @@ public class ScreenRouter {
         return currentScreen;
     }
 
-    public ArrayDeque<Screen> getPreviousScreens() { return previousScreens; }
+    public Deque<Screen> getPreviousScreens() { return previousScreens; }
 }

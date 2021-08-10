@@ -3,6 +3,7 @@ package com.revature.projectzero.screens;
 import com.revature.projectzero.util.ScreenRouter;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 public abstract class Screen {
 
@@ -11,7 +12,7 @@ public abstract class Screen {
     protected BufferedReader consoleReader;
     protected ScreenRouter router;
 
-    public Screen(String name, String route, BufferedReader consoleReader, ScreenRouter router) { // for initializing parameters in subclasses
+    protected Screen(String name, String route, BufferedReader consoleReader, ScreenRouter router) { // for initializing parameters in subclasses
         this.name = name;
         this.route = route;
         this.consoleReader = consoleReader;
@@ -26,6 +27,6 @@ public abstract class Screen {
         return route;
     }
 
-    public abstract void render() throws Exception; //to be modified by subclasses, executes the print and input for the designated screen
+    public abstract void render() throws IOException; //to be modified by subclasses, executes the print and input for the designated screen
 
 }

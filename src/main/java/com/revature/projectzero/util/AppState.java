@@ -6,18 +6,21 @@ import com.revature.projectzero.services.CourseService;
 import com.revature.projectzero.services.UserCoursesService;
 import com.revature.projectzero.services.UserService;
 import com.revature.projectzero.screens.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 /*
  * The "heart" of the program.
- * Currently instantiates all of the screens.
+ * Instantiates all of the screens and injects the dependencies needed to perform operations.
  * Contains static variable and object references used by the Screens.
  *
  */
 
 public class AppState {
 
+    private final Logger logger = LogManager.getLogger(AppState.class);
     private static boolean appRunning;
     private final ScreenRouter router;
 
@@ -54,12 +57,17 @@ public class AppState {
     }
 
     public void startup() {
-        router.navigate("/welcome");        //display welcome screen on startup
 
-        while (appRunning) {                    //while the app is running, render the current screen
+        // Display welcome screen on startup
+        router.navigate("/welcome");
+
+        // While the app is running, continue to render the current screen.
+        // Prevents the program from closing unexpectedly in the event that a user provides invalid input.
+        while (appRunning) {
             try {
                 router.getCurrentScreen().render();
             } catch (Exception e) {
+                logger.error("An unexpected error occurred while trying to display a screen.", e);
                 e.printStackTrace();
                 return;
             }

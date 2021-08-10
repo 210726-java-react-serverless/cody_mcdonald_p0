@@ -64,8 +64,8 @@ public class RemoveCourseScreen extends Screen {
                     }
 
                 }catch(Exception e) {
-                    logger.error(e.getMessage());
-                    logger.debug("Course not modified!");
+                    logger.error("Course deletion failed. Reason:", e);
+                    System.out.println("Aborting course deletion process.");
                 }
                 break;
             case "2":

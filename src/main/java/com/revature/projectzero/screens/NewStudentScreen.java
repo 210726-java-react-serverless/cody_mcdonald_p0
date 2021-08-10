@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 
 import java.io.BufferedReader;
+import java.io.IOException;
 
 
 public class NewStudentScreen extends Screen {
@@ -27,7 +28,7 @@ public class NewStudentScreen extends Screen {
     }
 
     @Override
-    public void render() throws Exception {
+    public void render() throws IOException {
         System.out.println("\nNew student Registration...\n");
 
         System.out.print("First name: ");
@@ -53,12 +54,11 @@ public class NewStudentScreen extends Screen {
             userService.register(newUser);
             courseListService.initialize(newUserCourseList);
             System.out.println("Student registered!");
-            logger.info("New student with the username "+ username +" registered and added to database.");
+            logger.info("New student registered and added to database.");
             router.navigate("/student-home");
         }catch (Exception e) {
             System.out.println("User not registered!\n");
-            logger.error("User registration failed. Reason:");
-            logger.error(e.getMessage());
+            logger.error("User registration failed. Reason: ", e);
             router.navigate("/welcome");
         }
 
