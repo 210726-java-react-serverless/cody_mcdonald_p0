@@ -28,11 +28,13 @@ public class AppState {
         appRunning = true;
         router = new ScreenRouter();
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+        InputValidator inputValidator = new InputValidator();
+
 
         // Create app components
         UserSession userSession = new UserSession();
         UserRepository userRepo = new UserRepository();
-        UserService userService = new UserService(userRepo, userSession);
+        UserService userService = new UserService(userRepo, userSession, inputValidator);
 
         CourseRepository courseRepo = new CourseRepository();
         CourseService courseService = new CourseService(courseRepo);

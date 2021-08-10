@@ -1,7 +1,7 @@
 package com.revature.projectzero.util;
 
 /*
- * Class for validating user input to check for:
+ *  Static class for validating user input to check for:
  *  Empty values,
  *  Password security, (Minimum of 8 characters)
  *  Username length, (Minimum of 4 characters)
@@ -9,7 +9,11 @@ package com.revature.projectzero.util;
  *
  */
 
+import com.revature.projectzero.documents.AppUser;
+import com.revature.projectzero.util.exceptions.InvalidEmailException;
 import com.revature.projectzero.util.exceptions.InvalidEntryException;
+import com.revature.projectzero.util.exceptions.InvalidPasswordException;
+import com.revature.projectzero.util.exceptions.InvalidUsernameException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,40 +30,39 @@ public class InputValidator {
 
 
 
-    // Not meant to be instantiated
-    private InputValidator(){}
+
 
     // Validator for student registration
-    public static void userEntryValidator(String fn, String ln,String em,String un,String pw){
+    public boolean userEntryValidator(AppUser user){
 
         // Matcher for checking that the username matches the given pattern
-        Matcher userMatch = usernamePattern.matcher(un);
+        Matcher userMatch = usernamePattern.matcher(user.getUsername());
         // Matcher for checking that the email matches the given pattern
-        Matcher emailMatch = emailPattern.matcher(em);
+        Matcher emailMatch = emailPattern.matcher(user.getEmail());
 
-        if(un.trim().equals("")||pw.trim().equals("")||fn.trim().equals("")||ln.trim().equals("")||
-                em.trim().equals(""))
+        if(user.getUsername().trim().equals("")||user.getPassword().trim().equals("")||user.getFirstName().trim().equals("")
+                ||user.getLastName().trim().equals("")||user.getEmail().trim().equals(""))
         {
             System.out.println("Fields cannot be blank");
             throw new InvalidEntryException("Blank fields detected.");
-        }else if(un.length() < MIN_USERNAME)
+        }else if(user.getUsername().length() < MIN_USERNAME)
         {
             System.out.println("Username must be at least 4 characters.");
-            throw new InvalidEntryException("Entered username below the minimum character limit.");
-        }else if(pw.length() < MIN_PASSWORD)
-        {
-            System.out.println("Password must be at least 8 characters.");
-            throw new InvalidEntryException("Entered password below the minimum character limit.");
+            throw new InvalidUsernameException("Entered username below the minimum character limit.");
         }else if(userMatch.find())
         {
             System.out.println("Username contains invalid characters.");
-            throw  new InvalidEntryException("Invalid characters entered in username.");
+            throw  new InvalidUsernameException("Invalid characters entered in username.");
+        }else if(user.getPassword().length() < MIN_PASSWORD)
+        {
+            System.out.println("Password must be at least 8 characters.");
+            throw new InvalidPasswordException("Entered password below the minimum character limit.");
         }else if(!emailMatch.find())
         {
             System.out.println("Please enter a valid email address.");
-            throw new InvalidEntryException("Invalid email address entered.");
+            throw new InvalidEmailException("Invalid email address entered.");
         }
 
-
+        return true;
     }
 }

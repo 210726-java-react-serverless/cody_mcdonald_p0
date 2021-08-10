@@ -16,10 +16,12 @@ import java.io.IOException;
 
 public class NewStudentScreen extends Screen {
 
+    // Instantiate Logger and dependencies.
     private final Logger logger = LogManager.getLogger(NewStudentScreen.class);
     private final UserService userService;
     private final UserCoursesService courseListService;
 
+    // Inject dependencies required for this screen.
     public NewStudentScreen(BufferedReader consoleReader, ScreenRouter router, UserService userService,
                             UserCoursesService userCoursesService) {
         super("NewStudentScreen", "/new-student", consoleReader, router);
@@ -29,7 +31,7 @@ public class NewStudentScreen extends Screen {
 
     @Override
     public void render() throws IOException {
-        System.out.println("\nNew student Registration...\n");
+        System.out.println("\nNew Student Registration...\n");
 
         System.out.print("First name: ");
         String firstName = consoleReader.readLine();
@@ -47,12 +49,17 @@ public class NewStudentScreen extends Screen {
         String password = consoleReader.readLine();
 
         try{
-            // Validate that the user followed the defined guidelines for each field.
-            InputValidator.userEntryValidator(firstName, lastName, email, username, password);
+            // Create an object that holds the new user's input. UserType is false for students.
             AppUser newUser = new AppUser(firstName, lastName, email, username, password, false);
+
+            // Instantiate the new user's course list.
             UserCourses newUserCourseList = new UserCourses(username);
+
+            // Validate the user's entry and add them to the database along with their course list.
             userService.register(newUser);
             courseListService.initialize(newUserCourseList);
+
+            // Inform the user of the success and log it.
             System.out.println("Student registered!");
             logger.info("New student registered and added to database.");
             router.navigate("/student-home");
