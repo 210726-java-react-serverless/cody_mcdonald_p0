@@ -27,6 +27,8 @@ public class AppState {
     public AppState() {
         appRunning = true;
         router = new ScreenRouter();
+
+        // Dependencies for injection
         BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
         InputValidator inputValidator = new InputValidator();
 
@@ -37,12 +39,12 @@ public class AppState {
         UserService userService = new UserService(userRepo, userSession, inputValidator);
 
         CourseRepository courseRepo = new CourseRepository();
-        CourseService courseService = new CourseService(courseRepo);
+        CourseService courseService = new CourseService(courseRepo, inputValidator);
 
         UserCoursesRepository courseListRepo = new UserCoursesRepository();
         UserCoursesService userCoursesService = new UserCoursesService(courseListRepo, userSession);
 
-        //Instantiate Screens
+        //Instantiate Screens and inject required dependences
         router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new AddCourseScreen(consoleReader, router, courseService))
                 .addScreen(new CourseRegistrationScreen(consoleReader, router, courseService, userCoursesService))

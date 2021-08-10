@@ -1,5 +1,6 @@
 package com.revature.projectzero.services;
 
+import com.revature.projectzero.util.InputValidator;
 import com.revature.projectzero.util.exceptions.CourseNotOpenException;
 import com.revature.projectzero.util.exceptions.InvalidEntryException;
 import com.revature.projectzero.documents.Course;
@@ -12,21 +13,23 @@ import java.util.List;
 public class CourseService {
 
     private final CourseRepository courseRepo;
+    private final InputValidator inputValidator;
 
-    public CourseService(CourseRepository courseRepo) {
+    public CourseService(CourseRepository courseRepo, InputValidator inputValidator) {
         this.courseRepo = courseRepo;
+        this.inputValidator = inputValidator;
     }
 
     public Course add(Course newCourse) {
 
-        if (!isCourseValid(newCourse)) {
-            System.out.println("Invalid course data provided, course not saved.");
-            throw new InvalidEntryException("User provided invalid course information.");
-        }else if (courseRepo.findCourseByName(newCourse.getCourseName()) != null)
+        inputValidator.newCourseEntryValidator(newCourse);
+
+        if (courseRepo.findCourseByName(newCourse.getCourseName()) != null)
         {
             System.out.println("Provided course already exists!");
             throw new ResourcePersistenceException("User provided a course name that already exists.");
-        }else if (courseRepo.findCourseByAbbreviation(newCourse.getCourseAbbreviation()) != null)
+        }
+        if (courseRepo.findCourseByAbbreviation(newCourse.getCourseAbbreviation()) != null)
         {
             System.out.println("A course with the existing abbreviation already exists!");
             throw new ResourcePersistenceException("User provided an abbreviation that already exists.");

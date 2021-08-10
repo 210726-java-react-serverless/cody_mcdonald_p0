@@ -3,7 +3,6 @@ package com.revature.projectzero.services;
 import com.revature.projectzero.util.InputValidator;
 import com.revature.projectzero.util.UserSession;
 import com.revature.projectzero.util.exceptions.AuthenticationException;
-import com.revature.projectzero.util.exceptions.InvalidEntryException;
 import com.revature.projectzero.documents.AppUser;
 import com.revature.projectzero.repositories.UserRepository;
 import com.revature.projectzero.util.exceptions.ResourcePersistenceException;
@@ -23,7 +22,7 @@ public class UserService {
     public AppUser register(AppUser newUser) {
 
         // Throws exception if entry is invalid
-        inputValidator.userEntryValidator(newUser);
+        inputValidator.newUserEntryValidator(newUser);
 
         if (userRepo.findUserByUsername(newUser.getUsername()) != null)
         {

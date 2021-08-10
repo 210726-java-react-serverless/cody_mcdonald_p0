@@ -9,6 +9,8 @@ import com.revature.projectzero.util.exceptions.NotRegisteredForCourseException;
 
 import java.util.List;
 
+//TODO Make future methods more granular in their assignments so tests aren't such a headache.
+
 public class UserCoursesService {
 
     private final UserCoursesRepository userCourseListRepo;
@@ -29,14 +31,17 @@ public class UserCoursesService {
         // Grabbing values to iterate over here instead of on one line so it looks nicer and is easier to follow
         String un = session.getCurrentUser().getUsername();
         List<String> userCourses = userCourseListRepo.findRegisteredCoursesByUsername(un);
+
+        // No need to check for duplicate courses if the list is null
         if(userCourses!=null) {
+            // Check list for requested course
             for (String course : userCourses) {
                 if (courseToJoin.equals(course))
                     throw new AlreadyRegisteredForCourseException("You have already registered for this course!");
             }
         }
 
-        userCourseListRepo.joinCourse(courseToJoin,session.getCurrentUser().getUsername());
+        userCourseListRepo.joinCourse(courseToJoin, un);
     }
 
 
@@ -86,8 +91,9 @@ public class UserCoursesService {
 
     public List<String> getCourses(){
 
-        if(userCourseListRepo.findRegisteredCoursesByUsername(
-                session.getCurrentUser().getUsername()).isEmpty()){
+        String un = session.getCurrentUser().getUsername();
+
+        if(userCourseListRepo.findRegisteredCoursesByUsername(un).isEmpty()){
             System.out.println("You have not registered for any courses!");
             throw new NoCoursesJoinedException("User has not registered for any courses.");
         }

@@ -4,6 +4,7 @@ import com.revature.projectzero.documents.AppUser;
 import com.revature.projectzero.repositories.UserRepository;
 import com.revature.projectzero.util.InputValidator;
 import com.revature.projectzero.util.UserSession;
+import com.revature.projectzero.util.exceptions.AuthenticationException;
 import com.revature.projectzero.util.exceptions.InvalidEntryException;
 import com.revature.projectzero.util.exceptions.ResourcePersistenceException;
 import org.junit.After;
@@ -16,13 +17,15 @@ import static org.mockito.Mockito.*;
 
 public class UserServiceTestSuite {
 
-    // Instantiate objects used for test
+    // Instantiate system under test
     private UserService sut;
+
+    // Mock dependencies required for the system under test
     private UserRepository mockUserRepo;
     private UserSession mockSession;
     private InputValidator mockValidator;
 
-    // Initialize objects before each test
+    // Initialize objects before testing
     @Before
     public void setup(){
 
@@ -33,7 +36,7 @@ public class UserServiceTestSuite {
 
     }
 
-    // Clear out objects after each test by setting them to null and letting garbage collection do the rest
+    // Clear out objects after testing by setting them to null
     @After
     public void cleanUp(){
         mockUserRepo = null;
@@ -43,21 +46,21 @@ public class UserServiceTestSuite {
 
 
     @Test
-    public void registerReturnsSuccessfullyWhenGivenValidUser(){
+    public void register_returnsSuccessfully_whenGivenValidUser(){
         //Arrange
         AppUser expectedResult = new AppUser("test", "test", "te.st@test.test", "test", "test.test",false);
         AppUser validUser = new AppUser("test", "test", "te.st@test.test", "test", "test.test",false);
-        when(mockValidator.userEntryValidator(validUser)).thenReturn(true);
+        when(mockValidator.newUserEntryValidator(validUser)).thenReturn(true);
         when(mockUserRepo.findUserByUsername(anyString())).thenReturn(null);
         when(mockUserRepo.findUserByEmail(anyString())).thenReturn(null);
         when(mockUserRepo.save(validUser)).thenReturn(expectedResult);
 
-        //Assert
+        //Act
         AppUser actualResult = sut.register(validUser);
 
-        //Act
+        //Assert
         Assert.assertEquals(expectedResult,actualResult);
-        verify(mockValidator,times(1)).userEntryValidator(validUser);
+        verify(mockValidator,times(1)).newUserEntryValidator(validUser);
         verify(mockUserRepo,times(1)).findUserByUsername(anyString());
         verify(mockUserRepo,times(1)).findUserByEmail(anyString());
         verify(mockUserRepo,times(1)).save(validUser);
@@ -65,7 +68,7 @@ public class UserServiceTestSuite {
     }
 
     @Test(expected = ResourcePersistenceException.class)
-    public void register_throwsException_whenGivenUserWithDuplicateUsername() {
+    public void register_throwsException_whenGivenUser_withDuplicateUsername() {
 
         // Arrange
         AppUser existingUser = new AppUser("original", "original", "original", "duplicate", "original",false);
@@ -84,7 +87,7 @@ public class UserServiceTestSuite {
     }
 
     @Test(expected = ResourcePersistenceException.class)
-    public void register_throwsException_whenGivenUserWithDuplicateEmail() {
+    public void register_throwsException_whenGivenUser_withDuplicateEmail() {
 
         // Arrange
         AppUser existingUser = new AppUser("original", "original", "duplicate", "original", "original",false);
@@ -103,21 +106,51 @@ public class UserServiceTestSuite {
     }
 
     @Test(expected = InvalidEntryException.class)
-    public void registerThrowsExceptionWhenGivenUserWithBlankValues(){
+    public void register_throwsException_whenGivenUser_withBlankValues(){
         //Arrange
         AppUser invalidUser = new AppUser("","","","","",false);
-        when(mockValidator.userEntryValidator(invalidUser)).thenThrow(InvalidEntryException.class);
+        when(mockValidator.newUserEntryValidator(invalidUser)).thenThrow(InvalidEntryException.class);
 
         //Act
         try{
             sut.register(invalidUser);
         } finally{
             // Assert
-            verify(mockValidator, times(1)).userEntryValidator(invalidUser);
+            verify(mockValidator, times(1)).newUserEntryValidator(invalidUser);
             verify(mockUserRepo, times(0)).save(invalidUser);
         }
 
     }
+
+    @Test
+    public void login_returnsSuccessfully_whenGivenValidCredentials(){
+        // Arrange
+        String validUsername = "valid";
+        String validPassword = "valid-password";
+        AppUser expectedUser = new AppUser("test","tester","test@test.test","valid","valid-password",false);
+        when(mockUserRepo.findUserByCredentials(validUsername,validPassword)).thenReturn(expectedUser);
+
+        // Act
+        AppUser actualUser = sut.login(validUsername, validPassword);
+
+        // Assert
+        Assert.assertEquals(expectedUser,actualUser);
+        verify(mockUserRepo, times(1)).findUserByCredentials(validUsername,validPassword);
+        verify(mockSession, times(1)).setCurrentUser(actualUser);
+
+
+    }
+
+    @Test(expected = AuthenticationException.class)
+    public void login_throwsException_whenProvidedWith_InvalidCredentials(){
+        // Arrange
+        String invalidUsername = "invalid";
+        String invalidPassword = "invalid-password";
+        when(mockUserRepo.findUserByCredentials(invalidUsername,invalidPassword)).thenReturn(null);
+        // Act
+        AppUser invalidUser = sut.login(invalidUsername, invalidPassword);
+    }
+
 
 
 }
