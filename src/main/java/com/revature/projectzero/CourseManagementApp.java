@@ -8,17 +8,17 @@ import com.revature.projectzero.util.AppState;
  *      Written by Cody McDonald
  *
  * Faculty Members may:
- *  Add new classes
- *  Change registration details for a class
- *  Remove a class from the registration catalog
+ *  Add new courses to the registration catalog
+ *  Edit a course name, abbreviation, or detail
+ *  Remove a course from the registration catalog
  *
  * Students may:
  *  Register a new account
  *  Login with existing credentials
- *  View classes available for registration
- *  Register for an open and available class
- *  Cancel registration for a class (if within window)
- *  View the class(es) they have registered for
+ *  View courses available for registration
+ *  Register for an open and available course
+ *  Cancel registration for a course (if it is open)
+ *  View the course(es) they have registered for
  *
  *
  */
