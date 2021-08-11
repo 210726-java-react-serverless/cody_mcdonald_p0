@@ -9,7 +9,6 @@ import com.revature.projectzero.util.exceptions.NotRegisteredForCourseException;
 
 import java.util.List;
 
-//TODO Make future methods more granular in their assignments so tests aren't such a headache.
 
 public class UserCoursesService {
 
@@ -36,8 +35,10 @@ public class UserCoursesService {
         if(userCourses!=null) {
             // Check list for requested course
             for (String course : userCourses) {
-                if (courseToJoin.equals(course))
+                if (courseToJoin.equals(course)) {
+                    System.out.println("You are already registered for this course!");
                     throw new AlreadyRegisteredForCourseException("You have already registered for this course!");
+                }
             }
         }
 
@@ -71,24 +72,6 @@ public class UserCoursesService {
 
     }
 
-    public void updateCourseNameInUserList(String originalName, String newName){
-
-        //TODO check if any users have registered for this course
-
-        userCourseListRepo.updateCourseNameInAllUserLists(originalName, newName);
-
-    }
-
-    public void expungeCourse(String courseName){
-
-        //TODO check if any users have registered for this course
-
-        userCourseListRepo.removeCourseFromAllUserLists(courseName);
-
-    }
-
-
-
     public List<String> getCourses(){
 
         String un = session.getCurrentUser().getUsername();
@@ -101,6 +84,23 @@ public class UserCoursesService {
         return userCourseListRepo.findRegisteredCoursesByUsername(session.getCurrentUser().getUsername());
     }
 
+    public void updateCourseNameInUserList(String originalName, String newName){
 
+        //TODO Could check if any users have registered for this course?
+
+        userCourseListRepo.updateCourseNameInAllUserLists(originalName, newName);
+
+    }
+
+    public void expungeCourse(String courseName){
+
+        //TODO Could check if any users have registered for this course?
+
+        userCourseListRepo.removeCourseFromAllUserLists(courseName);
+
+    }
 
 }
+
+
+//TODO Make future methods more granular in their assignments so tests aren't such a headache.

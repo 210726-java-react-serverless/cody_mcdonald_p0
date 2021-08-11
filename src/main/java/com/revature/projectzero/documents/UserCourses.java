@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -14,7 +13,7 @@ public class UserCourses {
 
     private String id;
     private String username;
-    private List<String> courses = new ArrayList<>();
+    private ArrayList<String> courses = new ArrayList<>();
 
     public UserCourses(){super();}
 
@@ -49,11 +48,11 @@ public class UserCourses {
         this.username = username;
     }
 
-    public List<String> getCourses() {
+    public ArrayList<String> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<String> courses) {
+    public void setCourses(ArrayList<String> courses) {
         this.courses = courses;
     }
 

@@ -47,11 +47,10 @@ public class CourseService {
 
     public void updateCourseName(Course editingCourse, String newName){
 
-        if (newName==null||newName.trim().equals(""))
-        {
-            System.out.println("Course name cannot be blank!");
-            throw new InvalidEntryException("User provided a blank Course Name.");
-        }else if (courseRepo.findCourseByName(newName) != null)
+
+        inputValidator.newCourseNameValidator(editingCourse, newName);
+
+        if (courseRepo.findCourseByName(newName) != null)
         {
             System.out.println("A course by that name already exists!");
             throw new ResourcePersistenceException("User provided a course name that already exists.");
@@ -60,28 +59,22 @@ public class CourseService {
         courseRepo.updatingCourseName(editingCourse, newName);
 
     }
-    public void updateCourseAbv(Course editingCourse, String newabv){
+    public void updateCourseAbv(Course editingCourse, String newAbv){
 
-        if (newabv==null||newabv.trim().equals(""))
-        {
-            System.out.println("Course abbreviation cannot be blank!");
-            throw new InvalidEntryException("User provided a blank course abbreviation.");
-        }else if (courseRepo.findCourseByAbbreviation(newabv) != null)
+        inputValidator.newCourseAbvValidator(editingCourse, newAbv);
+
+        if (courseRepo.findCourseByAbbreviation(newAbv) != null)
         {
             System.out.println("A course with that abbreviation already exists!");
             throw new ResourcePersistenceException("User provided an abbreviation that already exists.");
         }
 
-        courseRepo.updatingCourseAbv(editingCourse, newabv);
+        courseRepo.updatingCourseAbv(editingCourse, newAbv);
 
     }
     public void updateCourseDesc(Course editingCourse, String newDesc){
 
-        if (newDesc==null||newDesc.trim().equals(""))
-        {
-            System.out.println("Course description cannot be blank!");
-            throw new InvalidEntryException("User provided a blank course description.");
-        }
+        inputValidator.newCourseDetailsValidator(newDesc);
 
         courseRepo.updatingCourseDesc(editingCourse, newDesc);
 
@@ -98,14 +91,17 @@ public class CourseService {
         {
             System.out.println("Abbreviation cannot be blank!");
             throw new InvalidEntryException("Invalid abbreviation provided.");
+        }
 
-        }else if (courseRepo.findCourseByAbbreviation(abv) == null)
+        Course verifiedCourse = courseRepo.findCourseByAbbreviation(abv);
+
+        if (verifiedCourse == null)
         {
             System.out.println("No course found with provided abbreviation!");
             throw new ResourcePersistenceException("No course found with provided abbreviation.");
         }
 
-        return courseRepo.findCourseByAbbreviation(abv);
+        return verifiedCourse;
 
     }
 
