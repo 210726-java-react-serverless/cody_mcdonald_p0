@@ -44,10 +44,28 @@ public class UserCoursesServiceTestSuite {
         sut = null;
     }
 
+
     // joinCourse tests
+
 
     @Test
     public void joinCourse_executesSuccessfully_whenGivenValidCourseName(){
+        // Arrange
+        String validCourse = "validCourseToJoin";
+        List<String> validCourseList = new ArrayList<String>(){{add("Course1"); add("Course2");}};
+        when(mockUserSession.getCurrentUser()).thenReturn(mockUser);
+        when(mockUserCourseRepo.findRegisteredCoursesByUsername(mockUser.getUsername())).thenReturn(validCourseList);
+        // Act
+        sut.joinCourse(validCourse);
+        // Assert
+        verify(mockUserSession,times(1)).getCurrentUser();
+        verify(mockUserCourseRepo,times(1)).findRegisteredCoursesByUsername(mockUser.getUsername());
+
+    }
+
+
+    @Test
+    public void joinCourse_executesSuccessfully_whenGivenValidCourseName_ifNoCoursesHaveBeenJoined(){
         // Arrange
         String validCourse = "validCourseToJoin";
         List<String> validCourseList = new ArrayList<>();
@@ -175,8 +193,7 @@ public class UserCoursesServiceTestSuite {
 
     }
 
-
-
+    //
 
 }
 

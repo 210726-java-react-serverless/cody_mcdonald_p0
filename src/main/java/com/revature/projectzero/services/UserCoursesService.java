@@ -1,5 +1,6 @@
 package com.revature.projectzero.services;
 
+import com.revature.projectzero.documents.AppUser;
 import com.revature.projectzero.documents.UserCourses;
 import com.revature.projectzero.repositories.UserCoursesRepository;
 import com.revature.projectzero.util.UserSession;
@@ -23,7 +24,9 @@ public class UserCoursesService {
     }
 
     // Initialize a user's course list on the database when they register
-    public void initialize(UserCourses newUserCourseList){
+    public void initialize(){
+        AppUser newUser = session.getCurrentUser();
+        UserCourses newUserCourseList = new UserCourses(newUser.getUsername());
         userCourseListRepo.save(newUserCourseList);
     }
 
@@ -34,10 +37,11 @@ public class UserCoursesService {
         List<String> userCourses = userCourseListRepo.findRegisteredCoursesByUsername(un);
 
         // No need to check for duplicate courses if the list is null
-        if(userCourses!=null) {
+        if(!userCourses.isEmpty()) {
             // Check list for requested course
             for (String course : userCourses) {
-                if (courseToJoin.equals(course)) {
+                if (courseToJoin.equals(course))
+                {
                     System.out.println("You are already registered for this course!");
                     throw new AlreadyRegisteredForCourseException("You have already registered for this course!");
                 }
@@ -100,7 +104,6 @@ public class UserCoursesService {
     public void updateCourseNameInUserList(String originalName, String newName){
 
         //TODO Could check if any users have registered for this course?
-
         userCourseListRepo.updateCourseNameInAllUserLists(originalName, newName);
 
     }
@@ -108,7 +111,6 @@ public class UserCoursesService {
     public void expungeCourse(String courseName){
 
         //TODO Could check if any users have registered for this course?
-
         userCourseListRepo.removeCourseFromAllUserLists(courseName);
 
     }

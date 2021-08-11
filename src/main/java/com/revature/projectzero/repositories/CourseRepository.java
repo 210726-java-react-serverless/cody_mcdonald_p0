@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // Repository for performing CRUD operations on the Mongo usercourses collection
+// Creates JSON files for injection into Mongo
 
 public class CourseRepository implements CrudRepository<Course> {
 
@@ -28,12 +29,11 @@ public class CourseRepository implements CrudRepository<Course> {
 
     public Course findCourseByName(String courseName) {
         try {
-            // Get connection
+            // Get connection, access database, and access collection.
             MongoClient mongoClient = MongoClientFactory.getInstance().getConnection();
-            // Access database
             MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
-            // Access collection
             MongoCollection<Document> usersCollection = p0Db.getCollection(COLLECTION);
+
             // Create new document with provided values to query database
             Document queryDoc = new Document("courseName", courseName);
             // Search the database for an instance of a collection with the matching values
@@ -137,10 +137,13 @@ public class CourseRepository implements CrudRepository<Course> {
             MongoDatabase p0Db = mongoClient.getDatabase(DATABASE);
             MongoCollection<Document> coursesCollection = p0Db.getCollection(COLLECTION);
 
+            // Append $set to "courseName" : newName
             Document updateDoc = new Document("courseName", newName);
             Document appendDoc = new Document("$set",updateDoc);
+            // search for "courseName" : original courseName
             Document searchDoc = new Document("courseName",original.getCourseName());
 
+            //
             coursesCollection.updateOne(searchDoc,appendDoc);
         } catch (Exception e) {
             logger.error("An unexpected exception occurred.", e);
@@ -236,8 +239,6 @@ public class CourseRepository implements CrudRepository<Course> {
 
     }
 
-
-
     @Override
     public Course findByID(int id) {
         return null;
@@ -281,6 +282,5 @@ public class CourseRepository implements CrudRepository<Course> {
     public boolean deleteByID(int id) {
         return false;
     }
-
 
 }

@@ -217,6 +217,17 @@ public class InputValidatorTestSuite {
         Assert.assertTrue(sut.newCourseAbvValidator(original,validAbv));
     }
 
+    @Test(expected = InvalidEntryException.class)
+    public void newCourseAbvValidator_throwsException_whenGivenBlankAbbreviation(){
+        // Arrange
+        String invalidAbv = "";
+        Course original = new Course("ValidCourse","VLD101","This is a valid course.",true);
+
+        // Act
+        sut.newCourseAbvValidator(original,invalidAbv);
+
+    }
+
     @Test(expected = InvalidCourseAbbreviationException.class)
     public void newCourseAbvValidator_throwsException_whenGivenAbbreviation_thatIsTooLong(){
         // Arrange

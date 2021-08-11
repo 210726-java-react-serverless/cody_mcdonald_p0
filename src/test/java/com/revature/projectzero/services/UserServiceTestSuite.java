@@ -92,7 +92,9 @@ public class UserServiceTestSuite {
         // Arrange
         AppUser existingUser = new AppUser("original", "original", "duplicate", "original", "original",false);
         AppUser duplicate = new AppUser("first", "last", "duplicate", "username", "password",false);
-        when(mockUserRepo.findUserByUsername(duplicate.getUsername())).thenReturn(existingUser);
+        when(mockUserRepo.findUserByUsername(duplicate.getUsername())).thenReturn(null);
+        when(mockUserRepo.findUserByEmail(duplicate.getEmail())).thenReturn(existingUser);
+
 
         // Act
         try {
@@ -148,8 +150,10 @@ public class UserServiceTestSuite {
         String invalidPassword = "invalid-password";
         when(mockUserRepo.findUserByCredentials(invalidUsername,invalidPassword)).thenReturn(null);
         // Act
-        AppUser invalidUser = sut.login(invalidUsername, invalidPassword);
+        sut.login(invalidUsername, invalidPassword);
     }
+
+
 
 
 

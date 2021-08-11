@@ -54,11 +54,11 @@ public class NewStudentScreen extends Screen {
             AppUser newUser = new AppUser(firstName, lastName, email, username, password, false);
 
             // Instantiate the new user's course list.
-            UserCourses newUserCourseList = new UserCourses(username);
+
 
             // Validate the user's entry and add them to the database along with their course list.
             userService.register(newUser);
-            courseListService.initialize(newUserCourseList);
+            courseListService.initialize();
 
             // Inform the user of the success and log it.
             System.out.println("Student registered!");

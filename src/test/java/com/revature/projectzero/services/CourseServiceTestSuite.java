@@ -27,7 +27,6 @@ public class CourseServiceTestSuite {
 
     @Before
     public void setup(){
-
         mockCourseRepo = mock(CourseRepository.class);
         mockValidator = mock(InputValidator.class);
         sut = new CourseService(mockCourseRepo, mockValidator);
@@ -40,6 +39,7 @@ public class CourseServiceTestSuite {
         mockValidator = null;
         sut = null;
     }
+
 
     // add tests
 
