@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Objects;
 
+
+// Course POJO
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Course {
 
@@ -14,6 +17,7 @@ public class Course {
     private String courseDetail;
     private boolean isOpen;
 
+    //Jackson requires a no-args constructor
     public Course(){ super(); }
 
     public Course(String cn, String cAbv){

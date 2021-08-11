@@ -6,6 +6,7 @@ import java.io.*;
 
 import static com.revature.projectzero.util.AppState.closeApp;
 
+// Welcomes the user and provides options to login, create a new student account, or close the program.
 public class WelcomeScreen extends Screen {
 
 

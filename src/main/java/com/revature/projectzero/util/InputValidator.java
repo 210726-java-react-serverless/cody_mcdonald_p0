@@ -1,20 +1,20 @@
 package com.revature.projectzero.util;
 
-/*
- *  Static class for validating user input to check for:
- *  Empty values,
- *  Password security, (Minimum of 8 characters)
- *  Username length, (Minimum of 4 characters)
- *  invalid username characters, (no symbols in username)
- *
- */
-
 import com.revature.projectzero.documents.AppUser;
 import com.revature.projectzero.documents.Course;
 import com.revature.projectzero.util.exceptions.*;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+/*
+ *  Class for validating user input to check for:
+ *  Empty values,
+ *  Password security, (Minimum of 8 characters)
+ *  Username length, (Minimum of 4 characters)
+ *  invalid username characters, (no symbols in username)
+ *
+ */
 
 public class InputValidator {
 

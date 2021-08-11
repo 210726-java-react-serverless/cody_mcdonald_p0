@@ -10,6 +10,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+// Verifies a user's credentials and logs them in
+
 public class LoginScreen extends Screen {
 
     private final Logger logger = LogManager.getLogger(LoginScreen.class);

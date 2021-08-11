@@ -12,6 +12,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.bson.Document;
 
+
+//Repository for performing CRUD operations on the Mongo user collection.
+
 public class UserRepository implements CrudRepository<AppUser>{
 
     private static final String DATABASE = "p0";

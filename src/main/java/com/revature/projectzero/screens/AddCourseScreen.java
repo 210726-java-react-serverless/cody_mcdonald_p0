@@ -10,7 +10,7 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-
+// Allows a faculty user to add a new course.
 
 public class AddCourseScreen extends Screen{
 
@@ -29,9 +29,8 @@ public class AddCourseScreen extends Screen{
         String courseAbv;
         String courseDesc;
 
-        System.out.println("New Course Screen:\n");
-
-        System.out.println("Please select an option:\n" +
+        System.out.println("\nNew Course Screen:\n\n" +
+                "Please select an option:\n" +
                 "1) Add a Course\n" +
                 "2) Edit Courses\n" +
                 "3) Remove Courses\n" +

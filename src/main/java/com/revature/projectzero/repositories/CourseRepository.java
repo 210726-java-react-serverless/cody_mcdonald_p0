@@ -16,6 +16,8 @@ import org.bson.Document;
 import java.util.ArrayList;
 import java.util.List;
 
+// Repository for performing CRUD operations on the Mongo usercourses collection
+
 public class CourseRepository implements CrudRepository<Course> {
 
     private static final String DATABASE = "p0";

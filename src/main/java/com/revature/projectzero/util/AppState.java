@@ -24,6 +24,7 @@ public class AppState {
     private static boolean appRunning;
     private final ScreenRouter router;
 
+
     public AppState() {
         appRunning = true;
         router = new ScreenRouter();
@@ -33,7 +34,7 @@ public class AppState {
         InputValidator inputValidator = new InputValidator();
 
 
-        // Create app components
+        // Create app components and dependencies
         UserSession userSession = new UserSession();
         UserRepository userRepo = new UserRepository();
         UserService userService = new UserService(userRepo, userSession, inputValidator);
@@ -44,7 +45,7 @@ public class AppState {
         UserCoursesRepository courseListRepo = new UserCoursesRepository();
         UserCoursesService userCoursesService = new UserCoursesService(courseListRepo, userSession);
 
-        //Instantiate Screens and inject required dependences
+        //Instantiate Screens and inject required dependencies
         router.addScreen(new WelcomeScreen(consoleReader, router))
                 .addScreen(new AddCourseScreen(consoleReader, router, courseService))
                 .addScreen(new CourseRegistrationScreen(consoleReader, router, courseService, userCoursesService))

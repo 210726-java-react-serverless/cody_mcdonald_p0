@@ -10,6 +10,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+// Allows faculty to edit existing courses
+//TODO A view all courses screen would be useful here...
+
 public class EditCourseScreen extends Screen {
     private final Logger logger = LogManager.getLogger(EditCourseScreen.class);
     private final CourseService courseService;

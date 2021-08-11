@@ -1,12 +1,12 @@
 package com.revature.projectzero.documents;
 
-
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
+
+// UserCourses POJO
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UserCourses {
@@ -15,16 +15,18 @@ public class UserCourses {
     private String username;
     private ArrayList<String> courses = new ArrayList<>();
 
+    // Jackson requires a no-args constructor (but I guess I didn't use Jackson for this one...)
     public UserCourses(){super();}
 
     public UserCourses(String username){ this.username = username; }
 
+    // For adding multiple courses at instantiation, was not implemented but might have come in handy some time.
     public UserCourses(String username, String... regCourses){
         this.username = username;
         this.courses.addAll(Arrays.asList(regCourses));
-
     }
 
+    // For adding multiple courses, was not implemented but might have come in handy some time.
     public UserCourses addCourses(String... regCourses){
         this.courses.addAll(Arrays.asList(regCourses));
         return this;
@@ -32,9 +34,7 @@ public class UserCourses {
 
     // Setters and Getters
 
-    public String getId() {
-        return id;
-    }
+    public String getId() { return id; }
 
     public void setId(String id) {
         this.id = id;

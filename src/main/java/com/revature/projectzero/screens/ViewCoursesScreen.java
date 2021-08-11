@@ -9,6 +9,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+// Prints out "Available" courses, or courses that are marked as open on the database.
+
 public class ViewCoursesScreen extends Screen {
 
     private final Logger logger = LogManager.getLogger(ViewCoursesScreen.class);
@@ -25,7 +27,7 @@ public class ViewCoursesScreen extends Screen {
     public void render() throws IOException {
 
         try {
-            System.out.println("The currently available courses are:\n");
+            System.out.println("The currently available courses are:\n\n");
             for (Course a : courseService.getCourses()) {
                 System.out.println("Course name: " + a.getCourseName() + "\n"
                         + "Course Abbreviation: " + a.getCourseAbbreviation() + "\n"
@@ -36,11 +38,6 @@ public class ViewCoursesScreen extends Screen {
             logger.error("Failed to propagate courses to view screen. Reason:");
             logger.error(e.getMessage());
         }
-
-
         router.goBack();
-
-
-
     }
 }

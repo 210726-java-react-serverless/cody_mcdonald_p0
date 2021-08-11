@@ -10,6 +10,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+
+// Allows faculty members to remove a class from the database.
+
 public class RemoveCourseScreen extends Screen {
     private final Logger logger = LogManager.getLogger(RemoveCourseScreen.class);
     private final CourseService courseService;

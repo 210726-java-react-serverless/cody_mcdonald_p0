@@ -10,6 +10,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+// Allows a student to register for a course
+
 public class CourseRegistrationScreen extends Screen {
 
     private final Logger logger = LogManager.getLogger(CourseRegistrationScreen.class);
@@ -26,7 +28,7 @@ public class CourseRegistrationScreen extends Screen {
     @Override
     public void render() throws IOException {
 
-        System.out.println("Course Registration Screen:\n\n" +
+        System.out.println("\nCourse Registration Screen:\n\n" +
                 "1) Register for a course\n" +
                 "2) View Available Courses\n" +
                 "3) Cancel Course Registration\n" +

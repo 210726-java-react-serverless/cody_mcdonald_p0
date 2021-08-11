@@ -4,10 +4,11 @@ import com.revature.projectzero.util.exceptions.ScreenNotFoundException;
 import com.revature.projectzero.screens.Screen;
 
 import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.HashSet;
 import java.util.Set;
 
+
+// Class for routing between screens.
 public class ScreenRouter {
 
     private Screen currentScreen;
@@ -40,19 +41,20 @@ public class ScreenRouter {
                 .orElseThrow(ScreenNotFoundException::new);
     }
 
+    // Pops a screen off the PreviousScreens deque to return to a previous screen.
     public void goBack() throws ScreenNotFoundException{
         if(previousScreens.isEmpty()){ throw new ScreenNotFoundException();}
         currentScreen = previousScreens.pop();
     }
 
 
-    // Cleanses the history to free up memory after a user logs and to prevent potential security risks.
+    // Cleanses the history to free up memory after a user logs off to prevent potential security risks.
     public void deleteHistory(){ previousScreens.clear(); }
 
-    // Getters
+    // Getter
     public Screen getCurrentScreen() {
         return currentScreen;
     }
 
-    public Deque<Screen> getPreviousScreens() { return previousScreens; }
+
 }

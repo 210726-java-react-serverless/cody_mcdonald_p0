@@ -10,6 +10,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.List;
 
+// Allows a student to withdraw from a course.
+
 public class CourseWithdrawalScreen extends Screen {
 
     private final Logger logger = LogManager.getLogger(CourseWithdrawalScreen.class);
@@ -26,9 +28,8 @@ public class CourseWithdrawalScreen extends Screen {
     @Override
     public void render() throws IOException {
 
-        System.out.println("Course Withdrawal Screen.");
-
-            System.out.println("Please Select an Option.\n" +
+        System.out.println("\nCourse Withdrawal Screen.\n\n" +
+                "Please Select an Option.\n" +
                     "1) Begin withdrawal process\n" +
                     "2) Previous screen\n" +
                     "3) View registered classes\n" +
@@ -87,10 +88,8 @@ public class CourseWithdrawalScreen extends Screen {
                     router.navigate("/student-home");
                     break;
                 default:
-                    System.out.println("Invalid entry, returning to Dashboard...");
+                    System.out.println("Invalid entry, please try again.");
             }
-
-
 
     }
 }

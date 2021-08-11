@@ -16,9 +16,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
 
+/*
+ *  An eager Singleton Factory pattern for retrieving access details for an EC2 MongoDB instance.
+ *
+ *  Limits code duplication by building the components needed for the MongoClient to communicate with the database.
+ *
+ */
+
 public class MongoClientFactory {
 
     private final MongoClient mongoClient;
+
+    // Eager singleton, instantiated as soon as the class is loaded.
     private static final MongoClientFactory mongoClientFactory = new MongoClientFactory();
 
     private final Logger logger = LogManager.getLogger(MongoClientFactory.class);
@@ -28,8 +37,10 @@ public class MongoClientFactory {
         Properties appProperties = new Properties();
 
         try{
+            // Retrieving the application.properties file
             appProperties.load(new FileReader("src/main/resources/application.properties"));
 
+            // Retrieving information from the application.properties file
             String ipAddress = appProperties.getProperty("ipAddress");
             int port = Integer.parseInt(appProperties.getProperty("port"));
             String dbName = appProperties.getProperty("dbName");
@@ -37,11 +48,15 @@ public class MongoClientFactory {
             char[] password = appProperties.getProperty("password").toCharArray();
 
             List<ServerAddress> hosts = Collections.singletonList(new ServerAddress(ipAddress, port));
+
+            //Using MongoDB's native SCRAM-SHA-1 support to encrypt sensitive information.
             MongoCredential credentials = MongoCredential.createScramSha1Credential(username, dbName, password);
+
             MongoClientSettings settings = MongoClientSettings.builder()
                     .applyToClusterSettings(builder -> builder.hosts(hosts))
                     .credential(credentials)
                     .build();
+
 
             this.mongoClient = MongoClients.create(settings);
 

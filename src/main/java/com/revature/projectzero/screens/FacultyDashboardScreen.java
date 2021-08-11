@@ -7,6 +7,8 @@ import com.revature.projectzero.util.ScreenRouter;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+// Home screen for faculty users.
+
 public class FacultyDashboardScreen extends Screen{
 
     private final UserService userService;

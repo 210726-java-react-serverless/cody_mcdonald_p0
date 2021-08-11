@@ -8,6 +8,8 @@ import com.revature.projectzero.util.ScreenRouter;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+// Home screen for students.
+
 public class StudentDashboardScreen extends Screen {
 
     private final UserService userService;
@@ -22,8 +24,8 @@ public class StudentDashboardScreen extends Screen {
 
         AppUser currentUser = userService.getSession().getCurrentUser();
 
-        System.out.println("Welcome, "+currentUser.getFirstName()+".");
-        System.out.println("Please select an option." +
+        System.out.println("Welcome, "+currentUser.getFirstName()+".\n\n" +
+                "Please select an option.\n" +
                 "\n1) View available courses." +
                 "\n2) Register for a course." +
                 "\n3) View registered courses" +

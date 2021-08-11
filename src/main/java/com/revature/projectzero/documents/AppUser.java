@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Objects;
 
+
+// AppUser POJO
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AppUser {
 

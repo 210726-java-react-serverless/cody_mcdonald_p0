@@ -5,7 +5,6 @@ import com.revature.projectzero.documents.UserCourses;
 import com.revature.projectzero.services.UserCoursesService;
 import com.revature.projectzero.services.UserService;
 import com.revature.projectzero.util.ScreenRouter;
-import com.revature.projectzero.util.InputValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,6 +12,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+
+// Allows a student to create a new account. Logs in and creates a session automatically if successful.
 
 public class NewStudentScreen extends Screen {
 

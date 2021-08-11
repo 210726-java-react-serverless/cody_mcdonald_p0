@@ -8,6 +8,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+// Allows a student to view their registered courses.
+
 public class RegisteredCoursesScreen extends Screen {
 
     private final Logger logger = LogManager.getLogger(RegisteredCoursesScreen.class);
@@ -21,10 +23,10 @@ public class RegisteredCoursesScreen extends Screen {
     @Override
     public void render() throws IOException {
         try {
-            System.out.println("You have registered for the following courses:");
+            System.out.println("You have registered for the following courses:\n");
             System.out.println(userCoursesService.getCourses().toString());
         }catch (Exception e) {
-            logger.error("Failed to retrieve user courses. Reason:",e);
+            logger.error("Failed to retrieve user courses. Reason:\n",e);
         }
         System.out.println("Please select an option.\n" +
                 "1) Register for a course\n" +
