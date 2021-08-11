@@ -17,7 +17,8 @@ import java.util.List;
 import java.util.Properties;
 
 /*
- *  An eager Singleton Factory pattern for retrieving access details for an EC2 MongoDB instance.
+ *  An eager Singleton Factory pattern for supplying DAO (data access object)
+ *  classes with a connection to the Mongo Database
  *
  *  Limits code duplication by building the components needed for the MongoClient to communicate with the database.
  *
@@ -47,21 +48,19 @@ public class MongoClientFactory {
             String username = appProperties.getProperty("username");
             char[] password = appProperties.getProperty("password").toCharArray();
 
+            // A serializable list containing only the ServerAddress to be sent to the MDB client
             List<ServerAddress> hosts = Collections.singletonList(new ServerAddress(ipAddress, port));
 
-            //Using MongoDB's native SCRAM-SHA-1 support to encrypt sensitive information.
+            // Using MongoDB's native SCRAM-SHA-1 support to encrypt sensitive information.
             MongoCredential credentials = MongoCredential.createScramSha1Credential(username, dbName, password);
 
+            // Building the MongoDB client settings file.
             MongoClientSettings settings = MongoClientSettings.builder()
                     .applyToClusterSettings(builder -> builder.hosts(hosts))
                     .credential(credentials)
                     .build();
 
-
             this.mongoClient = MongoClients.create(settings);
-
-
-
 
         }catch (FileNotFoundException fnfe) {
             logger.error("Unable to load database properties file.", fnfe);

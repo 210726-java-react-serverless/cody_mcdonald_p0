@@ -31,6 +31,7 @@ public class ScreenRouter {
     // Retrieves a route, then sets the current screen to the screen with a matching route by using Collection.Stream()
     // to create a stream of Screen objects, filtering it to screens with the defined route, and finally
     // returning the first instance of a stream with that route.
+
     public void navigate(String route) {
         if(currentScreen != null) {
             previousScreens.push(currentScreen); //pushes the current screen onto the top of the stack
@@ -46,7 +47,6 @@ public class ScreenRouter {
         if(previousScreens.isEmpty()){ throw new ScreenNotFoundException();}
         currentScreen = previousScreens.pop();
     }
-
 
     // Cleanses the history to free up memory after a user logs off to prevent potential security risks.
     public void deleteHistory(){ previousScreens.clear(); }

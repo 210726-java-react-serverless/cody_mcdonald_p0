@@ -24,6 +24,7 @@ public class InputValidator {
 
     // Pattern for username verification, can be any character from a-z, A-Z, and 0-9. No symbols permitted.
     static Pattern usernamePattern = Pattern.compile("[^a-zA-Z0-9]");
+
     // Pattern for simple email verification.
     static Pattern emailPattern = Pattern.compile("^(.+)@(.+)$");
 
@@ -32,9 +33,6 @@ public class InputValidator {
     private static final int MAX_COURSE_ABV = 6;
     private static final int MAX_COURSE_DESC = 255;
     private static final int MIN_COURSE_DESC = 10;
-
-
-
 
     // Validator for student registration
     public boolean newUserEntryValidator(AppUser user){
