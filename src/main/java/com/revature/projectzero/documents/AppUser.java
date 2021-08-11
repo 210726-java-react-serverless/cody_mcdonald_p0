@@ -6,6 +6,7 @@ import java.util.Objects;
 
 
 // AppUser POJO
+// TODO: Map BsonProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AppUser {

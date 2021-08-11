@@ -7,6 +7,7 @@ import java.util.Objects;
 
 
 // Course POJO
+// TODO: Map BsonProperties
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Course {
