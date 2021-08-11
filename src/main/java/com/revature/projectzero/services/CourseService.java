@@ -1,12 +1,9 @@
 package com.revature.projectzero.services;
 
 import com.revature.projectzero.util.InputValidator;
-import com.revature.projectzero.util.exceptions.CourseNotOpenException;
-import com.revature.projectzero.util.exceptions.InvalidEntryException;
+import com.revature.projectzero.util.exceptions.*;
 import com.revature.projectzero.documents.Course;
 import com.revature.projectzero.repositories.CourseRepository;
-import com.revature.projectzero.util.exceptions.NoSuchCourseException;
-import com.revature.projectzero.util.exceptions.ResourcePersistenceException;
 
 import java.util.List;
 
@@ -112,17 +109,21 @@ public class CourseService {
             System.out.println("Invalid entry!");
             throw new InvalidEntryException("Blank entry.");
 
-        }else if (courseRepo.findCourseByAbbreviation(abv) == null)
+        }
+
+        Course verifiedCourse = courseRepo.findCourseByAbbreviation(abv);
+
+        if (verifiedCourse == null)
         {
             System.out.println("No course found with provided abbreviation!");
             throw new NoSuchCourseException("Invalid course abbreviation provided.");
-        }else if(!courseRepo.findCourseByAbbreviation(abv).isOpen())
+        }else if(!verifiedCourse.isOpen())
         {
             System.out.println("The registration and withdrawal windows for this course have closed!");
-            throw new ResourcePersistenceException("The registration and withdrawal windows for this course have closed!");
+            throw new CourseNotOpenException("The registration and withdrawal windows for this course have closed!");
         }
 
-        return courseRepo.findCourseByAbbreviation(abv);
+        return verifiedCourse;
 
     }
 
@@ -132,36 +133,35 @@ public class CourseService {
         {
             throw new InvalidEntryException("Invalid course name provided");
 
-        }else if (courseRepo.findCourseByName(courseName) == null)
+        }
+
+        Course verifiedCourse = courseRepo.findCourseByName(courseName);
+
+        if (verifiedCourse == null)
         {
             System.out.println("No course found with provided name!");
             throw new NoSuchCourseException("No course found with provided name!");
-        }else if(!courseRepo.findCourseByName(courseName).isOpen())
+        }else if(!verifiedCourse.isOpen())
         {
             System.out.println("The registration and withdrawal windows for this course have closed!");
             throw new CourseNotOpenException("User attempted to join or withdraw from a closed course.");
         }
 
-        return courseRepo.findCourseByAbbreviation(courseName);
+        return verifiedCourse;
 
     }
 
     public List<Course> getCourses(){
-        return courseRepo.retrieveOpenCourses();
-    }
 
-    public boolean isCourseValid(Course course) {
-        if ((course == null) || (course.getCourseName() == null) || course.getCourseName().trim().equals("") ||
-                (course.getCourseAbbreviation() == null) || course.getCourseAbbreviation().trim().equals("") ||
-                (course.getCourseDetail() == null) || course.getCourseDetail().trim().equals("")) {
-            System.out.println("Fields cannot be empty!");
-            return false;
+        List<Course> openCourses = courseRepo.retrieveOpenCourses();
+
+        if(openCourses.isEmpty())
+        {
+            System.out.println("There are no open courses! Please contact your student manager.");
+            throw new NoOpenCoursesException("No open courses found.");
         }
-        if ((course.getCourseName().length()) <= (course.getCourseAbbreviation().length())){
-            System.out.println("Please make the course abbreviation smaller than the course name.");
-            return false;
-        }
-        else return true;
+
+        return openCourses;
     }
 
 }

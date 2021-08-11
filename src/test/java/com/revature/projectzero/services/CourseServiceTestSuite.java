@@ -3,12 +3,14 @@ package com.revature.projectzero.services;
 import com.revature.projectzero.documents.Course;
 import com.revature.projectzero.repositories.CourseRepository;
 import com.revature.projectzero.util.InputValidator;
-import com.revature.projectzero.util.exceptions.InvalidEntryException;
-import com.revature.projectzero.util.exceptions.ResourcePersistenceException;
+import com.revature.projectzero.util.exceptions.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
@@ -255,6 +257,139 @@ public class CourseServiceTestSuite {
         // Act
         sut.verifyCourse(invalidAbv);
     }
+
+    //verifyCourseOpenByAbbreviation Tests
+
+    @Test
+    public void verifyCourseOpenByAbbreviation_returnsCourse_whenProvidedValidAbbreviation(){
+        // Arrange
+        String validAbv = "VALID";
+        Course expectedResult = new Course("ValidCourse","VALID",
+                "This is a valid course description",true);
+        Course validCourse = new Course("ValidCourse","VALID",
+                "This is a valid course description",true);
+        when(mockCourseRepo.findCourseByAbbreviation(validAbv)).thenReturn(validCourse);
+        // Act
+        Course actualResult = sut.verifyCourseOpenByAbbreviation(validAbv);
+        // Assert
+        Assert.assertEquals(expectedResult,actualResult);
+        verify(mockCourseRepo,times(1)).findCourseByAbbreviation(validAbv);
+    }
+
+    @Test(expected = CourseNotOpenException.class)
+    public void verifyCourseOpenByAbbreviation_throwsException_whenCourseClosed(){
+        // Arrange
+        String closedAbv = "TEST";
+        Course closedCourse = new Course("ValidCourse","TEST",
+                "This test will fail because open is false.",false);
+        when(mockCourseRepo.findCourseByAbbreviation(closedAbv)).thenReturn(closedCourse);
+        // Act
+        try{sut.verifyCourseOpenByAbbreviation(closedAbv);}
+        finally { // Assert
+            verify(mockCourseRepo, times(1)).findCourseByAbbreviation(closedAbv);
+        }
+    }
+
+    @Test(expected = NoSuchCourseException.class)
+    public void verifyCourseOpenByAbbreviation_throwsException_whenCourseNotFound(){
+        // Arrange
+        String invalidAbv = "TEST";
+        when(mockCourseRepo.findCourseByAbbreviation(invalidAbv)).thenReturn(null);
+        // Act
+        try{sut.verifyCourseOpenByAbbreviation(invalidAbv);}
+        finally { // Assert
+            verify(mockCourseRepo, times(1)).findCourseByAbbreviation(invalidAbv);
+        }
+    }
+
+    @Test(expected = InvalidEntryException.class)
+    public void verifyCourseOpenByAbbreviation_throwsException_whenProvidedEmptyInput(){
+        // Arrange
+        String invalidAbv = "";
+        // Act
+        sut.verifyCourseOpenByAbbreviation(invalidAbv);
+
+    }
+
+    //verifyCourseOpenByName Tests
+    @Test
+    public void verifyCourseOpenByName_returnsCourse_whenProvidedValidName(){
+        // Arrange
+        String validName = "ValidCourse";
+        Course expectedResult = new Course("ValidCourse","VALID",
+                "This is a valid course description",true);
+        Course validCourse = new Course("ValidCourse","VALID",
+                "This is a valid course description",true);
+        when(mockCourseRepo.findCourseByName(validName)).thenReturn(validCourse);
+        // Act
+        Course actualResult = sut.verifyCourseOpenByName(validName);
+        // Assert
+        Assert.assertEquals(expectedResult,actualResult);
+        verify(mockCourseRepo,times(1)).findCourseByName(validName);
+    }
+
+    @Test(expected = CourseNotOpenException.class)
+    public void verifyCourseOpenByName_throwsException_whenCourseClosed(){
+        // Arrange
+        String closedName = "Closed-course";
+        Course closedCourse = new Course("Closed-course","TEST",
+                "This test will fail because open is false.",false);
+        when(mockCourseRepo.findCourseByName(closedName)).thenReturn(closedCourse);
+        // Act
+        try{sut.verifyCourseOpenByName(closedName);}
+        finally { // Assert
+            verify(mockCourseRepo, times(1)).findCourseByName(closedName);
+        }
+    }
+
+    @Test(expected = NoSuchCourseException.class)
+    public void verifyCourseOpenByName_throwsException_whenCourseNotFound(){
+        // Arrange
+        String invalidName = "Spelunking 101";
+        when(mockCourseRepo.findCourseByName(invalidName)).thenReturn(null);
+        // Act
+        try{sut.verifyCourseOpenByName(invalidName);}
+        finally { // Assert
+            verify(mockCourseRepo, times(1)).findCourseByName(invalidName);
+        }
+    }
+
+    @Test(expected = InvalidEntryException.class)
+    public void verifyCourseOpenByName_throwsException_whenProvidedEmptyInput(){
+        // Arrange
+        String invalidName = "";
+        // Act
+        sut.verifyCourseOpenByName(invalidName);
+
+    }
+
+    //getCourses test
+
+    @Test
+    public void getCourses_returnsListOfOpenCourses_whenListIsPopulated(){
+        // Arrange
+        Course testCourse1 = new Course("","","",true);
+        Course testCourse2 = new Course("","","",true);
+        List<Course> validCourseList = new ArrayList<Course>();
+            validCourseList.add(testCourse1);
+            validCourseList.add(testCourse2);
+        when(mockCourseRepo.retrieveOpenCourses()).thenReturn(validCourseList);
+        // Act
+        sut.getCourses();
+        // Assert
+        verify(mockCourseRepo,times(1)).retrieveOpenCourses();
+    }
+
+    @Test(expected = NoOpenCoursesException.class)
+    public void getCourses_throwsException_whenNoOpenCoursesFound(){
+        // Arrange
+        List<Course> emptyCourseList = new ArrayList<Course>();
+        when(mockCourseRepo.retrieveOpenCourses()).thenReturn(emptyCourseList);
+        // Act
+        sut.getCourses();
+
+    }
+
 
 
 }
